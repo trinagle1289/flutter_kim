@@ -38,6 +38,12 @@
    接著再新增 android/local.properties 內容為 flutter.minSdkVersion=26
 <br>
 
+#### 新增 Flutter 套件指令
+```bat
+flutter pub add camera export_video_frame image image_picker path path_provider permission_handler tflite_flutter
+```
+<br>
+
 #### Flutter 插件連結
 * [camera](https://pub.dev/packages/camera)
 * [export_video_frame](https://pub.dev/packages/export_video_frame)
