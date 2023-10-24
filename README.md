@@ -28,7 +28,9 @@
 
 #### Android Manifest 添加權限方法:
 以 android.permission.READ_EXTERNAL_STORAGE 為例，將此段程式碼放置於 android/app/src/main/AndroidManifest.xml 內的第二行中
+```html
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+```
 <br>
 
 #### Android build.gradle 設定方法:
