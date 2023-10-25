@@ -57,3 +57,42 @@ flutter pub add camera export_video_frame image image_picker path path_provider 
 * [permission_handler](https://pub.dev/packages/permission_handler)
 * [riverpod](https://pub.dev/packages/riverpod)
 * [tflite_flutter](https://pub.dev/packages/tflite_flutter)
+<br>
+
+#### Git Commit 參考
+
+##### <br>標題行的標準術語
+
+**中文版:**
+| 標頭 | 定義 |
+| - | - |
+| Add | 建立一個功能，例如：特性、測試、依賴性。 |
+| Cut | 移除一個功能，例如：特性、測試、依賴性。 |
+| Fix | 解決問題，例如：bug、錯字、意外、誤述。 |
+| Bump | 增加某些東西的版本，例如：依賴性。 |
+| Make | 變更建置流程、工具或基礎架構。 |
+| Start | 開始做某些事情，例如：創建一個功能標誌。 |
+| Stop | 結束做某些事情，例如：刪除一個功能標誌。 |
+| Refactor | 程式碼的修改必須只能是一個重構。 |
+| Reformat | 格式的重構，例如：省略空格。 |
+| Optimize | 效能的重構，例如：加快代碼速度。 |
+| Document | 文檔的重構，例如：幫助文件。 |
+
+**英文版:**
+| First Word | Meaning |
+| - | - |
+| Add | Create a capability e.g. feature, test, dependency. |
+| Cut | Remove a capability e.g. feature, test, dependency. |
+| Fix | Fix an issue e.g. bug, typo, accident, misstatement. |
+| Bump | Increase the version of something e.g. dependency. |
+| Make | Change the build process, or tooling, or infra. |
+| Start | Begin doing something; e.g. create a feature flag. |
+| Stop | End doing something; e.g. remove a feature flag. |
+| Refactor | A code change that MUST be just a refactoring. |
+| Reformat | Refactor of formatting, e.g. omit whitespace. |
+| Optimize | Refactor of performance, e.g. speed up code. |
+| Document | Refactor of documentation, e.g. help files. |
+
+<br>*參考資料*
+> [Git Commit Message Standard](https://gist.github.com/tonibardina/9290fbc7d605b4f86919426e614fe692)
+> [Git Commit Message 這樣寫會更好，替專案引入規範與範例](https://wadehuanglearning.blogspot.com/2019/05/commit-commit-commit-why-what-commit.html)
