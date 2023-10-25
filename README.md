@@ -11,6 +11,7 @@
 * path: ^1.8.3
 * path_provider: ^2.1.1
 * permission_handler: ^11.0.1
+* riverpod: ^2.4.4
 * tflite_flutter: ^0.10.3
 <br>
 
@@ -42,7 +43,7 @@
 
 #### 新增 Flutter 套件指令
 ```bat
-flutter pub add camera export_video_frame image image_picker path path_provider permission_handler tflite_flutter
+flutter pub add camera export_video_frame image image_picker path path_provider permission_handler riverpod tflite_flutter
 ```
 <br>
 
@@ -54,4 +55,5 @@ flutter pub add camera export_video_frame image image_picker path path_provider 
 * [path](https://pub.dev/packages/path)
 * [path_provider](https://pub.dev/packages/path_provider)
 * [permission_handler](https://pub.dev/packages/permission_handler)
+* [riverpod](https://pub.dev/packages/riverpod)
 * [tflite_flutter](https://pub.dev/packages/tflite_flutter)
