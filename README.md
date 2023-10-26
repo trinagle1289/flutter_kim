@@ -12,7 +12,15 @@
 * path: ^1.8.3
 * path_provider: ^2.1.1
 * permission_handler: ^11.0.1
+* riverpod_annotation: ^2.2.1
 * tflite_flutter: ^0.10.3
+<br>
+
+#### 開發專用插件:
+* build_runner: ^2.4.6
+* custom_lint: ^0.5.5
+* riverpod_generator: ^2.3.5
+* riverpod_lint: ^2.3.2
 <br>
 
 #### Android Manifest 所需權限:
@@ -43,7 +51,8 @@
 
 #### 新增 Flutter 套件指令
 ```bat
-flutter pub add camera export_video_frame image image_picker path path_provider permission_handler riverpod tflite_flutter
+flutter pub add camera export_video_frame flutter_riverpod image image_picker path path_provider permission_handler riverpod_annotation tflite_flutter
+flutter pub add dev:build_runner dev:custom_lint dev:riverpod_generator dev:riverpod_lint
 ```
 <br>
 
