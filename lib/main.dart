@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MainApp());
-}
+import 'ui/title.dart';
+import 'ui/lhc/step1_1.dart';
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+/// 主程式
+void main() => const TitleApp();
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
+/// 取得 LHC 介面
+Widget getLhcApp(String idx) {
+  Widget widget;
+
+  switch (idx) {
+    case "1-1":
+      widget = const Step1of1App();
+      break;
+    default:
+      widget = const TitleApp();
+      break;
   }
+
+  return widget;
 }
