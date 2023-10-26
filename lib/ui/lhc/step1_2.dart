@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_kim_lhc/main.dart';
 
-void main() => const Step1of2App();
+void main() => runApp(const Step1of2App());
+
+String NUM = "0"; // 你要從前一頁取得的值********************************
+var poseResultImgPath = 'picture/img_2.png';
 
 /// 步驟 1-2 介面
 class Step1of2App extends StatelessWidget {
@@ -23,8 +26,6 @@ class PoseResultField extends StatefulWidget {
 
 /// 評估姿勢結果區域之狀態
 class PoseResultFieldState extends State<PoseResultField> {
-  String NUM = "0"; // 你要從前一頁取得的值********************************
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,22 +51,12 @@ class PoseResultFieldState extends State<PoseResultField> {
               height: 3.0, // 或者增加高度以獲得更長的縱線
               color: Colors.black,
             ),
-            Container(
-              child: Row(
-                children: [
-                  Image.asset(
-                    'picture/img_2.png',
-                    width: 190,
-                    height: 250,
-                  ),
-                  Image.asset(
-                    'picture/img_2.png',
-                    width: 190,
-                    height: 250,
-                  )
-                ],
-              ), // 這裡是空白圖片的背景色，你可以自由調整
-            ),
+            // Row(
+            //   children: [
+            //     Image.asset(poseResultImgPath, width: 190, height: 250),
+            //     Image.asset(poseResultImgPath, width: 190, height: 250)
+            //   ],
+            // ),
             const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 25),
@@ -85,8 +76,8 @@ class PoseResultFieldState extends State<PoseResultField> {
               children: [
                 ElevatedButton(
                   onPressed: () {
+                    // 點擊按鈕時導航到錄影畫面
                     Navigator.push(
-                      // 點擊按鈕時導航到錄影畫面
                       context,
                       MaterialPageRoute(builder: (context) => getLhcApp("1-1")),
                     );

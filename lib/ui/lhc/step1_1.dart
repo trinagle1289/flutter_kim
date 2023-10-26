@@ -6,8 +6,9 @@ import 'package:flutter_kim_lhc/main.dart';
 import 'package:path_provider/path_provider.dart';
 
 var videoFile = 'video/tmp.mp4';
+var isRecording = false;
 
-void main() => const Step1of1App();
+void main() => runApp(const Step1of1App());
 
 /// 步驟 1-1 介面
 class Step1of1App extends StatelessWidget {
@@ -18,17 +19,13 @@ class Step1of1App extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+          title: const Text('步驟一', style: TextStyle(fontSize: 40)),
           backgroundColor: Colors.blue,
-          flexibleSpace: Container(
-            color: Colors.blue,
-          ),
+          flexibleSpace: Container(color: Colors.blue),
           centerTitle: true,
           automaticallyImplyLeading: false,
-          title: const Text('步驟一', style: TextStyle(fontSize: 40)),
         ),
-        body: const Center(
-          child: CameraField(),
-        ),
+        body: const Center(child: CameraField()),
       ),
     );
   }
@@ -66,19 +63,13 @@ class CameraFieldState extends State<CameraField> {
               top: 0,
               left: 0,
               right: 0,
-              child: Container(
-                color: Colors.white,
-                height: 10,
-              ),
+              child: Container(color: Colors.white, height: 10),
             ),
             Positioned(
               top: 500,
               left: 0,
               right: 0,
-              child: Container(
-                color: Colors.white,
-                height: 10,
-              ),
+              child: Container(color: Colors.white, height: 10),
             ),
             Positioned(
               top: 510,
@@ -88,10 +79,7 @@ class CameraFieldState extends State<CameraField> {
                 color: const Color(0xFFFFDCB2),
                 height: 70,
                 child: const Center(
-                  child: Text(
-                    '請保持在受測者的正右方拍攝',
-                    style: TextStyle(fontSize: 20),
-                  ),
+                  child: Text('請保持在受測者的正右方拍攝', style: TextStyle(fontSize: 20)),
                 ),
               ),
             ),
@@ -146,7 +134,7 @@ class CameraFieldState extends State<CameraField> {
                       style: const TextStyle(fontSize: 30)),
                 ),
               ),
-            ),
+            )
           ],
         ),
       );
