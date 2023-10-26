@@ -6,12 +6,12 @@
 #### 使用插件:
 * camera: ^0.10.5+5
 * export_video_frame: ^0.0.7
+* flutter_riverpod: ^2.4.4
 * image: ^4.1.3
 * image_picker: ^1.0.4
 * path: ^1.8.3
 * path_provider: ^2.1.1
 * permission_handler: ^11.0.1
-* riverpod: ^2.4.4
 * tflite_flutter: ^0.10.3
 <br>
 
@@ -50,12 +50,12 @@ flutter pub add camera export_video_frame image image_picker path path_provider 
 #### Flutter 插件連結
 * [camera](https://pub.dev/packages/camera)
 * [export_video_frame](https://pub.dev/packages/export_video_frame)
+* [flutter_riverpod](https://pub.dev/packages/flutter_riverpod)
 * [image](https://pub.dev/packages/image)
 * [image_picker](https://pub.dev/packages/image_picker)
 * [path](https://pub.dev/packages/path)
 * [path_provider](https://pub.dev/packages/path_provider)
 * [permission_handler](https://pub.dev/packages/permission_handler)
-* [riverpod](https://pub.dev/packages/riverpod)
 * [tflite_flutter](https://pub.dev/packages/tflite_flutter)
 <br>
 
@@ -94,5 +94,6 @@ flutter pub add camera export_video_frame image image_picker path path_provider 
 | Document | Refactor of documentation, e.g. help files. |
 
 <br>*參考資料*
+
 > [Git Commit Message Standard](https://gist.github.com/tonibardina/9290fbc7d605b4f86919426e614fe692)
 > [Git Commit Message 這樣寫會更好，替專案引入規範與範例](https://wadehuanglearning.blogspot.com/2019/05/commit-commit-commit-why-what-commit.html)
