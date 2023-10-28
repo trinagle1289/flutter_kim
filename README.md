@@ -7,6 +7,8 @@
 * camera: ^0.10.5+5
 * export_video_frame: ^0.0.7
 * flutter_riverpod: ^2.4.4
+* flutter_storage_path: ^1.0.4
+* gal: ^2.1.2
 * image: ^4.1.3
 * image_picker: ^1.0.4
 * path: ^1.8.3
@@ -51,8 +53,11 @@
 
 #### 新增 Flutter 套件指令
 ```bat
-flutter pub add camera export_video_frame flutter_riverpod image image_picker path path_provider permission_handler riverpod_annotation tflite_flutter
-flutter pub add dev:build_runner dev:custom_lint dev:riverpod_generator dev:riverpod_lint
+REM 此段為安裝專案使用套件
+$ flutter pub add camera export_video_frame flutter_riverpod flutter_storage_path gal image image_picker path path_provider permission_handler riverpod_annotation tflite_flutter
+
+REM 此段為安裝開發使用套件
+$ flutter pub add dev:build_runner dev:custom_lint dev:riverpod_generator dev:riverpod_lint
 ```
 <br>
 
@@ -60,6 +65,8 @@ flutter pub add dev:build_runner dev:custom_lint dev:riverpod_generator dev:rive
 * [camera](https://pub.dev/packages/camera)
 * [export_video_frame](https://pub.dev/packages/export_video_frame)
 * [flutter_riverpod](https://pub.dev/packages/flutter_riverpod)
+* [flutter_storage_path](https://pub.dev/packages/flutter_storage_path)
+* [gal](https://pub.dev/packages/gal)
 * [image](https://pub.dev/packages/image)
 * [image_picker](https://pub.dev/packages/image_picker)
 * [path](https://pub.dev/packages/path)
@@ -101,8 +108,10 @@ flutter pub add dev:build_runner dev:custom_lint dev:riverpod_generator dev:rive
 | Reformat | Refactor of formatting, e.g. omit whitespace. |
 | Optimize | Refactor of performance, e.g. speed up code. |
 | Document | Refactor of documentation, e.g. help files. |
+<br>
 
-<br>*參考資料*
+*參考資料*
 
 > [Git Commit Message Standard](https://gist.github.com/tonibardina/9290fbc7d605b4f86919426e614fe692)
+> <br>
 > [Git Commit Message 這樣寫會更好，替專案引入規範與範例](https://wadehuanglearning.blogspot.com/2019/05/commit-commit-commit-why-what-commit.html)
