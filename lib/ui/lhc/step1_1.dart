@@ -1,21 +1,25 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter_kim_lhc/main.dart';
-import 'package:path_provider/path_provider.dart';
 
-var videoFile = 'video/tmp.mp4';
-var isRecording = false;
+import 'package:camera/camera.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:gal/gal.dart';
 
-void main() => runApp(const Step1of1App());
+part 'step1_1.g.dart';
+
+late List<CameraDescription> _cameras; // 相機列表
+late CameraController _controller; // 相機控制器
+var _videoAlbum = "KIM_Videos"; // 儲存影像的相簿
+
+Future<void> main() async => runApp(ProviderScope(child: Step1of1App()));
 
 /// 步驟 1-1 介面
-class Step1of1App extends StatelessWidget {
-  const Step1of1App({super.key});
-
+// ignore: use_key_in_widget_constructors
+class Step1of1App extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -25,174 +29,196 @@ class Step1of1App extends StatelessWidget {
           centerTitle: true,
           automaticallyImplyLeading: false,
         ),
-        body: const Center(child: CameraField()),
+        body: _BodyField(),
       ),
     );
   }
 }
 
-/// 相機區域
-class CameraField extends StatefulWidget {
-  const CameraField({super.key});
-
+/// 介面的身體區域
+class _BodyField extends ConsumerWidget {
   @override
-  State<CameraField> createState() => CameraFieldState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    // 錄影按鈕資料
+    var recordBtnColor = ref.watch(_recordBtnColorProvider);
+    var recordBtnText = ref.watch(_recordBtnTextProvider);
+
+    return Scaffold(
+      body: Stack(children: [
+        // 相機區域
+        Padding(
+          padding: const EdgeInsets.only(top: 5.0),
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: SizedBox(width: 350, height: 500, child: _CameraField()),
+          ),
+        ),
+
+        // 介紹欄
+        Positioned(
+          top: 510,
+          left: 0,
+          right: 0,
+          child: Container(
+            color: const Color(0xFFFFDCB2),
+            height: 70,
+            child: const Center(
+                child: Text('請保持在受測者的正右方拍攝', style: TextStyle(fontSize: 20))),
+          ),
+        ),
+
+        // 錄影按鈕
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 30.0),
+            child: ElevatedButton(
+              onPressed: () async {
+                // 檢查目前是否正在錄影
+                var isRecording =
+                    ref.read(_recordBtnColorProvider.notifier).isRecording();
+
+                // 更改按鈕狀態
+                ref.read(_recordBtnColorProvider.notifier).changeState();
+                ref.read(_recordBtnTextProvider.notifier).changeState();
+
+                if (!isRecording) {
+                  // 如果現在沒有進行錄影，開始錄影
+                  await _controller.startVideoRecording();
+                } else {
+                  // 如果正在錄影，停止錄影並儲存檔案，最後再切換畫面
+                  stopRecording().then(
+                    (_) => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => getLhcApp("1-2")),
+                    ),
+                  );
+                }
+              },
+              style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0))),
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(recordBtnColor),
+                minimumSize:
+                    MaterialStateProperty.all<Size>(const Size(170, 50)),
+              ),
+              child: Text(recordBtnText, style: const TextStyle(fontSize: 30)),
+            ),
+          ),
+        ),
+      ]),
+    );
+  }
+}
+
+/// 相機區域
+class _CameraField extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _CameraFieldState();
 }
 
 /// 相機區域狀態
-class CameraFieldState extends State<CameraField> {
-  late List<CameraDescription> cameras;
-  late CameraController cameraController;
-  var isRecording = false;
-
+class _CameraFieldState extends State<_CameraField> {
   @override
   Widget build(BuildContext context) {
-    if (cameraController.value.isInitialized) {
-      return Scaffold(
-        body: Stack(
-          children: [
-            Align(
-              alignment: Alignment.topCenter,
-              child: SizedBox(
-                width: 350,
-                height: 500,
-                child: CameraPreview(cameraController),
-              ),
-            ),
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: Container(color: Colors.white, height: 10),
-            ),
-            Positioned(
-              top: 500,
-              left: 0,
-              right: 0,
-              child: Container(color: Colors.white, height: 10),
-            ),
-            Positioned(
-              top: 510,
-              left: 0,
-              right: 0,
-              child: Container(
-                color: const Color(0xFFFFDCB2),
-                height: 70,
-                child: const Center(
-                  child: Text('請保持在受測者的正右方拍攝', style: TextStyle(fontSize: 20)),
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 30.0),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    if (isRecording) {
-                      try {
-                        var videoFile =
-                            await cameraController.stopVideoRecording();
-                        await videoFile.saveTo(
-                            "${getApplicationDocumentsDirectory()}/$videoFile");
-                        setState(() {
-                          isRecording = false;
-                        });
-                      } catch (e) {
-                        debugPrint("Error $e");
-                      }
-                      Navigator.push(
-                        // 點擊按鈕時導航到第二個畫面
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => getLhcApp("1-2")),
-                      );
-                    } else {
-                      await createVideoFolder();
-                      try {
-                        await cameraController.startVideoRecording();
-                        setState(() {
-                          isRecording = true;
-                        });
-                      } catch (e) {
-                        debugPrint("Error $e");
-                      }
-                    }
-                  },
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                    ),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        isRecording ? Colors.red : Colors.blue),
-                    minimumSize:
-                        MaterialStateProperty.all<Size>(const Size(170, 50)),
-                  ),
-                  child: Text(isRecording ? '停止錄影' : '開始錄影',
-                      style: const TextStyle(fontSize: 30)),
-                ),
-              ),
-            )
-          ],
-        ),
-      );
-    } else {
-      return const SizedBox();
+    Widget emptyWidget = Container();
+
+    try {
+      if (!_controller.value.isInitialized) {
+        return emptyWidget;
+      } else {
+        return MaterialApp(
+          home: CameraPreview(_controller),
+        );
+      }
+    } catch (e) {
+      return emptyWidget;
     }
   }
 
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
-    await startCamera();
+    initCameraState();
   }
 
   @override
-  Future<void> dispose() async {
-    await cameraController.dispose();
+  void dispose() {
+    _controller.dispose();
     super.dispose();
   }
 
-  /// 開始使用相機
-  Future<void> startCamera() async {
-    // 獲取可用相機
-    cameras = await availableCameras();
+  /// 設定相機參數
+  Future<void> setCameraData() async {
+    await requestPermissions(); // 請求權限
 
-    // 若無可用相機，則直接離開程式
-    if (cameras.isEmpty) {
-      return;
-    }
+    // 尋找可用相機
+    _cameras = await availableCameras();
 
-    // 取得相機控制器
-    cameraController = CameraController(
-      cameras[0],
+    // 設定相機控制器
+    _controller = CameraController(
+      _cameras[0],
       ResolutionPreset.high,
       enableAudio: false,
-      imageFormatGroup: ImageFormatGroup.yuv420,
+      imageFormatGroup: ImageFormatGroup.jpeg,
     );
+  }
 
-    // 初始化相機控制器
-    await cameraController.initialize().then((value) {
-      if (!mounted) {
-        return;
-      }
+  /// 初始化相機狀態
+  Future<void> initCameraState() async {
+    await setCameraData();
+
+    // 初始化控制器
+    _controller.initialize().then((_) {
+      if (!mounted) return;
       setState(() {});
-    }).catchError((e) {
-      debugPrint("ERROR in startCamera():\n$e");
+    }).catchError((Object e) {
+      debugPrint("Camera Error: ${e.toString()}");
     });
   }
-
-  /// 建立影像資料夾
-  Future<void> createVideoFolder() async {
-    var appDir = await getApplicationDocumentsDirectory();
-    var videoPath = '${appDir.path}/videos/';
-    await Directory(videoPath).create();
-
-    // 如果路徑存在則表示成功建立資料夾
-    if (await (Directory(videoPath).exists())) {
-      debugPrint('Create Video Folder In Path: $videoPath');
-    }
-  }
 }
+
+/// 錄影按鈕顏色
+@riverpod
+class _RecordBtnColor extends _$RecordBtnColor {
+  final _color = Colors.blue;
+
+  @override
+  Color build() => _color;
+
+  /// 是否正在錄影
+  bool isRecording() => state == Colors.red ? true : false;
+
+  /// 切換狀態
+  void changeState() =>
+      state == Colors.red ? state = Colors.blue : state = Colors.red;
+}
+
+/// 錄影按鈕文字
+@riverpod
+class _RecordBtnText extends _$RecordBtnText {
+  @override
+  String build() => "開始錄影";
+
+  /// 是否正在錄影
+  bool isRecording() => state == "結束錄影" ? true : false;
+
+  /// 切換狀態
+  void changeState() => state == "結束錄影" ? state = "開始錄影" : state = "結束錄影";
+}
+
+/// 請求權限
+Future<void> requestPermissions() async =>
+    await [Permission.camera, Permission.storage].request();
+
+/// 停止錄影
+Future<void> stopRecording() async {
+  var cacheVideo = await _controller.stopVideoRecording(); // 暫時儲存影片
+  await Gal.putVideo(cacheVideo.path, album: _videoAlbum); // 將影片儲存在本地端的相簿中
+  debugPrint("file path: ${cacheVideo.path}");
+}
+
+/// 取得錄影相簿名稱
+String getVideoAlbumName() => _videoAlbum;
