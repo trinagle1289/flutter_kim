@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'ui/title.dart';
 import 'ui/lhc/step1_1.dart';
+import 'ui/lhc/step1_1_loading.dart';
 import 'ui/lhc/step1_2.dart';
 import 'ui/lhc/step1_3.dart';
 import 'ui/lhc/step2.dart';
@@ -17,7 +18,11 @@ import 'ui/lhc/step8.dart';
 /// 主程式
 void main() => const TitleApp();
 
-class LhcData {}
+class LhcData {
+  // var pose
+}
+
+var videoAlbum = getVideoAlbumName();
 
 /// 取得 LHC 介面
 Widget getLhcApp(String idx) {
@@ -25,7 +30,10 @@ Widget getLhcApp(String idx) {
 
   switch (idx) {
     case "1-1":
-      widget = const Step1of1App();
+      widget = Step1of1App();
+      break;
+    case "1-1-Load":
+      widget = Step1of1LoadingApp();
       break;
     case "1-2":
       widget = const Step1of2App();
@@ -67,3 +75,11 @@ Widget getLhcApp(String idx) {
 
   return widget;
 }
+
+/// 頂端工具列
+AppBar getTitleAppBar(String title) => AppBar(
+    centerTitle: true,
+    automaticallyImplyLeading: false,
+    backgroundColor: Colors.blue,
+    flexibleSpace: Container(color: Colors.blue),
+    title: Text(title, style: const TextStyle(fontSize: 40)));

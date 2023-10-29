@@ -19,20 +19,12 @@ Future<void> main() async => runApp(ProviderScope(child: Step1of1App()));
 // ignore: use_key_in_widget_constructors
 class Step1of1App extends ConsumerWidget {
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('步驟一', style: TextStyle(fontSize: 40)),
-          backgroundColor: Colors.blue,
-          flexibleSpace: Container(color: Colors.blue),
-          centerTitle: true,
-          automaticallyImplyLeading: false,
+  Widget build(BuildContext context, WidgetRef ref) => MaterialApp(
+        home: Scaffold(
+          appBar: getTitleAppBar("步驟一"),
+          body: _BodyField(),
         ),
-        body: _BodyField(),
-      ),
-    );
-  }
+      );
 }
 
 /// 介面的身體區域
@@ -90,7 +82,8 @@ class _BodyField extends ConsumerWidget {
                   stopRecording().then(
                     (_) => Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => getLhcApp("1-2")),
+                      MaterialPageRoute(
+                          builder: (context) => getLhcApp("1-1-Load")),
                     ),
                   );
                 }
