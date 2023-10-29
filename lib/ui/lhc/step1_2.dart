@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_kim_lhc/main.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() => runApp(const Step1of2App());
+void main() => runApp(const ProviderScope(child: Step1of2App()));
 
 String NUM = "0"; // 你要從前一頁取得的值********************************
-var poseResultImgPath = 'picture/img_2.png';
+var poseResultImgPath = 'assets/lhc/Body_Posture/pose_2.png';
 
 /// 步驟 1-2 介面
 class Step1of2App extends StatelessWidget {
@@ -51,12 +52,12 @@ class PoseResultFieldState extends State<PoseResultField> {
               height: 3.0, // 或者增加高度以獲得更長的縱線
               color: Colors.black,
             ),
-            // Row(
-            //   children: [
-            //     Image.asset(poseResultImgPath, width: 190, height: 250),
-            //     Image.asset(poseResultImgPath, width: 190, height: 250)
-            //   ],
-            // ),
+            Row(
+              children: [
+                Image.asset(poseResultImgPath, width: 190, height: 250),
+                Image.asset(poseResultImgPath, width: 190, height: 250)
+              ],
+            ),
             const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 25),
