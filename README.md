@@ -5,7 +5,6 @@
 
 ### 使用插件:
 * camera: ^0.10.5+5
-* export_video_frame: ^0.0.7
 * flutter_riverpod: ^2.4.4
 * flutter_storage_path: ^1.0.4
 * gal: ^2.1.2
@@ -17,6 +16,8 @@
 * riverpod_annotation: ^2.2.1
 * tflite_flutter: ^0.10.3
 * vector_math: ^2.1.4
+* video_thumbnail: ^0.5.3
+* media_info: ^0.12.0+2
 <br>
 
 ### 開發專用插件:
@@ -55,7 +56,7 @@
 ### 新增 Flutter 套件指令
 ```bat
 REM 此段為安裝專案使用套件
-$ flutter pub add camera export_video_frame flutter_riverpod flutter_storage_path gal image image_picker path path_provider permission_handler riverpod_annotation tflite_flutter vector_math
+$ flutter pub add camera flutter_riverpod flutter_storage_path gal image image_picker path path_provider permission_handler riverpod_annotation tflite_flutter vector_math video_thumbnail media_info
 
 REM 此段為安裝開發使用套件
 $ flutter pub add dev:build_runner dev:custom_lint dev:riverpod_generator dev:riverpod_lint
@@ -64,7 +65,6 @@ $ flutter pub add dev:build_runner dev:custom_lint dev:riverpod_generator dev:ri
 
 ### Flutter 插件連結
 * [camera](https://pub.dev/packages/camera)
-* [export_video_frame](https://pub.dev/packages/export_video_frame)
 * [flutter_riverpod](https://pub.dev/packages/flutter_riverpod)
 * [flutter_storage_path](https://pub.dev/packages/flutter_storage_path)
 * [gal](https://pub.dev/packages/gal)
@@ -75,6 +75,8 @@ $ flutter pub add dev:build_runner dev:custom_lint dev:riverpod_generator dev:ri
 * [permission_handler](https://pub.dev/packages/permission_handler)
 * [tflite_flutter](https://pub.dev/packages/tflite_flutter)
 * [vector_math](https://pub.dev/packages/vector_math)
+* [video_thumbnail](https://pub.dev/packages/video_thumbnail) 
+* [media_info](https://pub.dev/packages/media_info)
 <br>
 
 ### Git Commit 參考
