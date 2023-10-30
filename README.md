@@ -120,3 +120,4 @@ $ flutter pub add dev:build_runner dev:custom_lint dev:riverpod_generator dev:ri
 
 此專案使用 TFLite 格式的模型
 版本為 singlepose-thunder
+需要將此模型放置於 assets/model/ 資料夾底下
