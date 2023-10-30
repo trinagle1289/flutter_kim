@@ -212,6 +212,3 @@ Future<void> stopRecording() async {
   await Gal.putVideo(cacheVideo.path, album: _videoAlbum); // 將影片儲存在本地端的相簿中
   debugPrint("file path: ${cacheVideo.path}");
 }
-
-/// 取得錄影相簿名稱
-String getVideoAlbumName() => _videoAlbum;
