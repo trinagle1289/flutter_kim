@@ -15,14 +15,13 @@ import 'ui/lhc/step6_3.dart';
 import 'ui/lhc/step7.dart';
 import 'ui/lhc/step8.dart';
 
+/// 姿勢評級
+List step1of1Data = []; // 開始結束姿勢標籤(2個字串)
+int step1of2Data = 0; // 姿態評級
+List step2Data = [];
+
 /// 主程式
 void main() => const TitleApp();
-
-class LhcData {
-  // var pose
-}
-
-var videoAlbum = getVideoAlbumName();
 
 /// 取得 LHC 介面
 Widget getLhcApp(String idx) {
@@ -36,7 +35,7 @@ Widget getLhcApp(String idx) {
       widget = Step1of1LoadingApp();
       break;
     case "1-2":
-      widget = const Step1of2App();
+      widget = Step1of2App();
       break;
     case "1-3":
       widget = const Step1of3App();
@@ -83,3 +82,9 @@ AppBar getTitleAppBar(String title) => AppBar(
     backgroundColor: Colors.blue,
     flexibleSpace: Container(color: Colors.blue),
     title: Text(title, style: const TextStyle(fontSize: 40)));
+
+/// 重置資訊
+void reset() {
+  step1of1Data = [];
+  step1of2Data = -1;
+}
