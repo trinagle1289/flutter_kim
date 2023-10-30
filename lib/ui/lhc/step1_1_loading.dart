@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_kim_lhc/main.dart';
 
-import 'package:export_video_frame/export_video_frame.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img_lib;
@@ -14,6 +13,8 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:gal/gal.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:vector_math/vector_math.dart';
+import 'package:media_info/media_info.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 part 'step1_1_loading.g.dart';
 
@@ -90,85 +91,57 @@ Future<void> analyze() async {
   var videoPath =
       (await ImagePicker().pickVideo(source: ImageSource.gallery))?.path;
 
-  // 設定串流，以每 100 毫秒擷取輸入的影像
-  var stream = ExportVideoFrame.exportImagesFromFile(
-          File(videoPath!), Duration(milliseconds: 100), 0.0)
-      .asBroadcastStream();
+  // 獲取影片資訊
+  var videoInfo = await MediaInfo().getMediaInfo(videoPath!);
+  var durationMs = videoInfo["durationMs"]; // 影片的總毫秒數
 
   // 設定起始和結束的所抓到的圖片
   var startFrames = [];
   var endFrames = [];
 
-  var idx = 0; // 索引值
   var numOfFrames = 5; // 設定即將取得影像幀的數量
-  // 加入監聽方法，此監聽過程會將前 5 幀和後 5 幀影像的內容進行儲存
-  stream.listen((element) {
-    debugPrint("Reading Stream index: $idx");
-    // 將前 5 幀影像存入到 startFrames
-    if (idx < numOfFrames) {
-      var img = img_lib.decodeImage(element.readAsBytesSync());
-      startFrames.add(img);
-      idx++;
-    }
-    // 將最後 5 幀影像存入到 endFrames
-    var img = img_lib.decodeImage(element.readAsBytesSync());
-    endFrames.add(img);
-    // 如果存儲超過 5 幀影像，刪除第 1 份資料
-    if (endFrames.length > numOfFrames) {
-      endFrames.removeAt(0);
-    }
-  }).onDone(() => debugPrint("Finish Loading Stream."));
+  var interval = 30; // 每張影像所抓的時間間隔
+  for (var i = 0; i < numOfFrames && i < durationMs; i++) {
+    var startImg = img_lib.decodeImage((await VideoThumbnail.thumbnailData(
+        video: videoPath, timeMs: i * interval))!);
+    startFrames.add(startImg);
 
-  // 讓影像串流執行到最後
-  // 藉由讀取 stream 長度的方式進行 stream 的監聽方法
-  var len = await stream.length;
-  debugPrint("目前已讀取 $len 張影像");
+    var endImg = img_lib.decodeImage((await VideoThumbnail.thumbnailData(
+        video: videoPath, timeMs: durationMs - i * interval))!);
+    endFrames.add(endImg);
 
-  // 清除暫存影像
-  debugPrint(await ExportVideoFrame.cleanImageCache()
-      ? "clean Image Cache success"
-      : "clean Image Cache failed");
-
-  // 測試：儲存影像
-  var path = (await getApplicationCacheDirectory()).path;
-  for (var i = 0; i < startFrames.length; i++) {
-    var png = img_lib.encodePng(startFrames[i]!);
-    var pngPath = "$path/$i.png";
-    var success = await img_lib.writeFile(pngPath, png);
-    debugPrint(success
-        ? "success to save image in cache"
-        : "failed to save image in cache");
-    Gal.putImage(pngPath, album: "start frame");
+    debugPrint("save image times: ${i + 1}");
   }
-  for (var i = 0; i < endFrames.length; i++) {
-    var png = img_lib.encodePng(endFrames[i]!);
-    var pngPath = "$path/$i.png";
-    var success = await img_lib.writeFile(pngPath, png);
-    debugPrint(success
-        ? "success to save image in cache"
-        : "failed to save image in cache");
-    Gal.putImage(pngPath, album: "end frame");
-  }
+
+  var labels = await getBodyPostureRatingPoints(startFrames, endFrames);
+  debugPrint("start: \"${labels[0]}\", end:\"${labels[1]}\"");
 }
 
 /// 取得姿勢評級
-Future<List<String>> getBodyPostureRatingPoints(
-    List<img_lib.Image> start, List<img_lib.Image> end) async {
+Future<List> getBodyPostureRatingPoints(List start, List end) async {
   // 設定起始和結束標籤
-  var startLabels = List<String>.empty();
-  var endLabels = List<String>.empty();
+  var startLabels = [];
+  var endLabels = [];
 
   var interpreter = await Interpreter.fromAsset(modelPath); // 建立模型解釋器
 
   // 計算影片開頭的身體姿勢所使用的標籤
   for (var frame in start) {
-    var out = await runPoseModel(interpreter, frame);
+    var out = runPoseModel(interpreter, frame);
     startLabels.add(getLabel(out));
+
+    // var path = "${(await getApplicationCacheDirectory()).path}/test1.png";
+    // await img_lib.writeFile(path, img_lib.encodePng(drawCircle(frame, out)));
+    // await Gal.putImage(path, album: "Start");
   }
   // 計算影片結尾的身體姿勢所使用的標籤
   for (var frame in end) {
-    var out = await runPoseModel(interpreter, frame);
+    var out = runPoseModel(interpreter, frame);
     endLabels.add(getLabel(out));
+
+    // var path = "${(await getApplicationCacheDirectory()).path}/test1.png";
+    // await img_lib.writeFile(path, img_lib.encodePng(drawCircle(frame, out)));
+    // await Gal.putImage(path, album: "End");
   }
 
   interpreter.close(); // 關閉模型解釋器
@@ -183,7 +156,7 @@ Future<List<String>> getBodyPostureRatingPoints(
 }
 
 /// 從 list 中取得最多數量的標籤字串
-String maxNumOfLabelInList(List<String> list) {
+String maxNumOfLabelInList(List list) {
   // 計算各標籤數量
   var count = {"A1": 0, "A2": 0, "A3": 0, "A4": 0, "A5": 0};
   for (var element in list) {
@@ -204,7 +177,7 @@ String maxNumOfLabelInList(List<String> list) {
 }
 
 /// 執行姿態模型
-Future<List> runPoseModel(Interpreter interpreter, img_lib.Image imgIn) async {
+List runPoseModel(Interpreter interpreter, img_lib.Image imgIn) {
   // 取得輸入輸出的格式資料
   var shapeIn = interpreter.getInputTensor(0).shape;
   var shapeOut = interpreter.getOutputTensor(0).shape;
@@ -212,20 +185,27 @@ Future<List> runPoseModel(Interpreter interpreter, img_lib.Image imgIn) async {
   var edge = shapeIn[1]; // 輸入影像邊長的長度
   var resizedImg = resizeImgInSquare(imgIn, edge); // 縮放過後的圖片
 
+  // 計算模型輸出攤平過後的數量
+  var inLen = 1;
+  for (var element in shapeIn) {
+    inLen *= element;
+  }
   // 設定模型輸入
-  var input = Float32List.fromList(resizedImg
-          .map((e) => e.map((e) => e.toDouble()).toList())
-          .toList()
-          .flatten())
-      .reshape(shapeIn);
+  var input = List<double>.filled(inLen, 0).reshape(shapeIn);
+  for (var i = 0; i < edge; i++) {
+    for (var j = 0; j < edge; j++) {
+      input[0][i][j] =
+          resizedImg.getPixel(i, j).map((e) => e.toDouble()).toList();
+    }
+  }
 
   // 計算模型輸出攤平過後的數量
-  var flatOutLen = 0;
+  var outLen = 1;
   for (var element in shapeOut) {
-    flatOutLen *= element;
+    outLen *= element;
   }
   // 設定模型輸出
-  var output = Float32List(flatOutLen).reshape(shapeOut);
+  var output = List<double>.filled(outLen, 0.0).reshape(shapeOut);
 
   // 運行模型
   interpreter.run(input, output);
@@ -237,8 +217,9 @@ Future<List> runPoseModel(Interpreter interpreter, img_lib.Image imgIn) async {
 img_lib.Image resizeImgInSquare(img_lib.Image imgIn, int edge) {
   // 圖片長寬所除的數值
   var divNum = max(imgIn.width / edge, imgIn.height / edge);
+
   // 等比例縮放後的圖片
-  var resizedImg = img_lib.Image.fromResized(imgIn,
+  var resizedImg = img_lib.copyResize(imgIn,
       width: imgIn.width ~/ divNum, height: imgIn.height ~/ divNum);
 
   // 建立輸出影像
@@ -273,21 +254,21 @@ String getLabel(List kptList) {
   };
 
   // 將關鍵點的資訊轉換成 [17, 2] 的角度
-  var positions = List<Vector2>.empty();
+  var positions = [];
   for (var kpt in kptList[0][0]) {
     positions.add(Vector2(kpt[0], kpt[1]));
   }
 
   // 根據關鍵點角度字典，得到此專案會使用到的所有角度
-  var angles = List<double>.empty();
+  var angles = [];
   kptAngleDic.forEach((key, value) {
     angles.add(
         getAngle(positions[key], positions[value[0]], positions[value[1]]));
   });
 
   // 設定左右角度
-  var leftAngles = List<double>.empty();
-  var rightAngles = List<double>.empty();
+  var leftAngles = [];
+  var rightAngles = [];
   for (var i = 0; i < angles.length; i += 2) {
     leftAngles.add(angles[i]);
     rightAngles.add(angles[i + 1]);
@@ -325,8 +306,23 @@ double getAngle(Vector2 pA, Vector2 pB, Vector2 pC) {
   var lineC = (pA - pB).length;
 
   // 計算角度
-  var result = radians(acos(
+  var result = degrees(acos(
       (pow(lineB, 2) + pow(lineC, 2) - pow(lineA, 2)) / (2 * lineB * lineC)));
 
   return result;
+}
+
+/// 繪製關鍵點
+img_lib.Image drawCircle(img_lib.Image imgIn, List positions) {
+  var edge = 1280;
+  img_lib.Image imgOut = resizeImgInSquare(imgIn, edge);
+
+  for (var pos in positions[0][0]) {
+    imgOut = img_lib.drawCircle(imgOut,
+        x: (pos[0] * edge).toInt(),
+        y: (pos[1] * edge).toInt(),
+        radius: 5,
+        color: img_lib.ColorRgba8(255, 0, 0, 255));
+  }
+  return imgOut;
 }
