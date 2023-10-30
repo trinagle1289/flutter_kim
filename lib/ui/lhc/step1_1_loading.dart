@@ -88,48 +88,64 @@ Future<void> analyze() async {
   var videoPath =
       (await ImagePicker().pickVideo(source: ImageSource.gallery))?.path;
 
-  // 將影像轉換成影像串流(每 30 毫秒一幀)
+  // 設定串流，以每 100 毫秒擷取輸入的影像
   var stream = ExportVideoFrame.exportImagesFromFile(
-          File(videoPath!), const Duration(milliseconds: 30), 1.0)
+          File(videoPath!), Duration(milliseconds: 100), 0.0)
       .asBroadcastStream();
+
+  // 設定起始和結束的所抓到的圖片
+  var startFrames = [];
+  var endFrames = [];
+
+  var idx = 0; // 索引值
+  var numOfFrames = 5; // 設定即將取得影像幀的數量
+  // 加入監聽方法，此監聽過程會將前 5 幀和後 5 幀影像的內容進行儲存
+  stream.listen((element) {
+    debugPrint("Reading Stream index: $idx");
+    // 將前 5 幀影像存入到 startFrames
+    if (idx < numOfFrames) {
+      var img = img_lib.decodeImage(element.readAsBytesSync());
+      startFrames.add(img);
+      idx++;
+    }
+    // 將最後 5 幀影像存入到 endFrames
+    var img = img_lib.decodeImage(element.readAsBytesSync());
+    endFrames.add(img);
+    // 如果存儲超過 5 幀影像，刪除第 1 份資料
+    if (endFrames.length > numOfFrames) {
+      endFrames.removeAt(0);
+    }
+  }).onDone(() => debugPrint("Finish Loading Stream."));
+
+  // 讓影像串流執行到最後
+  // 藉由讀取 stream 長度的方式進行 stream 的監聽方法
+  var len = await stream.length;
+  debugPrint("目前已讀取 $len 張影像");
 
   // 清除暫存影像
   debugPrint(await ExportVideoFrame.cleanImageCache()
-      ? "clean success"
-      : "clean failed");
+      ? "clean Image Cache success"
+      : "clean Image Cache failed");
 
-  /// 取得影像串流長度
-  var streamLen = await stream.length;
-
-  // 設定起始和結束的所抓到的圖片
-  var startFrames = List<img_lib.Image?>.empty();
-  var endFrames = List<img_lib.Image?>.empty();
-
-  // 取得前面和最後 5 個的畫面
-  for (var i = 0; i < streamLen; i++) {
-    if (i < 5) {
-      var bytes = (await stream.elementAt(i + 1)).readAsBytesSync();
-      var img = img_lib.decodeImage(bytes);
-      startFrames.add(img);
-    }
-    if (i < streamLen - 5) {
-      var bytes = (await stream.elementAt(i + 1)).readAsBytesSync();
-      var img = img_lib.decodeImage(bytes);
-      endFrames.add(img);
-    }
-  }
-
+  // 測試：儲存影像
   var path = (await getApplicationCacheDirectory()).path;
   for (var i = 0; i < startFrames.length; i++) {
     var png = img_lib.encodePng(startFrames[i]!);
     var pngPath = "$path/$i.png";
     var success = await img_lib.writeFile(pngPath, png);
-
     debugPrint(success
         ? "success to save image in cache"
         : "failed to save image in cache");
-
     Gal.putImage(pngPath, album: "start frame");
+  }
+  for (var i = 0; i < endFrames.length; i++) {
+    var png = img_lib.encodePng(endFrames[i]!);
+    var pngPath = "$path/$i.png";
+    var success = await img_lib.writeFile(pngPath, png);
+    debugPrint(success
+        ? "success to save image in cache"
+        : "failed to save image in cache");
+    Gal.putImage(pngPath, album: "end frame");
   }
 }
 
