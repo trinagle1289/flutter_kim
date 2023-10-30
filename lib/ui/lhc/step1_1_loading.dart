@@ -109,8 +109,8 @@ Future<void> analyze() async {
     debugPrint("save image times: ${i + 1}");
   }
 
-  var labels = await getBodyPostureRatingPoints(startFrames, endFrames);
-  debugPrint("start: \"${labels[0]}\", end:\"${labels[1]}\"");
+  step1of1Data = await getBodyPostureRatingPoints(startFrames, endFrames);
+  debugPrint("start: \"${step1of1Data[0]}\", end:\"${step1of1Data[1]}\"");
 }
 
 /// 取得姿勢評級
