@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_kim_lhc/main.dart';
 
-String selectedRating = '0';
+var _bodyPostureTable = 'assets/lhc/Body_Posture/table.png';
+
 void main() => runApp(const Step1of3App());
 
 class Step1of3App extends StatelessWidget {
@@ -51,7 +52,7 @@ class Step1of3FieldState extends State<Step1of3Field> {
             ),
             const SizedBox(height: 20),
             Image.asset(
-              'picture/topic-1.png',
+              _bodyPostureTable,
               width: 370,
               height: 370,
             ),
@@ -65,7 +66,7 @@ class Step1of3FieldState extends State<Step1of3Field> {
                 ),
                 const SizedBox(width: 10),
                 DropdownButton<String>(
-                  value: selectedRating,
+                  value: step1of2Data.toString(),
                   items: [
                     '0',
                     '03',
@@ -98,7 +99,7 @@ class Step1of3FieldState extends State<Step1of3Field> {
                   }).toList(),
                   onChanged: (value) {
                     setState(() {
-                      selectedRating = value!;
+                      step1of2Data = int.parse(value!);
                     });
                   },
                 ),
