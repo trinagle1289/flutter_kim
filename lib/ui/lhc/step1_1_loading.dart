@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_kim_lhc/main.dart';
 
 import 'package:export_video_frame/export_video_frame.dart';
@@ -14,8 +13,11 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:gal/gal.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:vector_math/vector_math.dart';
 
 part 'step1_1_loading.g.dart';
+
+var modelPath = "assets/model/singlepose-thunder-3.tflite";
 
 void main() => runApp(ProviderScope(child: Step1of1LoadingApp()));
 
@@ -149,6 +151,88 @@ Future<void> analyze() async {
   }
 }
 
+/// 取得姿勢評級
+Future<List<String>> getBodyPostureRatingPoints(
+    List<img_lib.Image> start, List<img_lib.Image> end) async {
+  // 設定起始和結束標籤
+  var startLabels = List<String>.empty();
+  var endLabels = List<String>.empty();
+
+  var interpreter = await Interpreter.fromAsset(modelPath); // 建立模型解釋器
+
+  // 計算影片開頭的身體姿勢所使用的標籤
+  for (var frame in start) {
+    var out = await runPoseModel(interpreter, frame);
+    startLabels.add(getLabel(out));
+  }
+  // 計算影片結尾的身體姿勢所使用的標籤
+  for (var frame in end) {
+    var out = await runPoseModel(interpreter, frame);
+    endLabels.add(getLabel(out));
+  }
+
+  interpreter.close(); // 關閉模型解釋器
+
+  // 計算並設定起始結尾中最多數量的標籤字串
+  var poseLabels = [
+    maxNumOfLabelInList(startLabels),
+    maxNumOfLabelInList(endLabels)
+  ];
+
+  return poseLabels;
+}
+
+/// 從 list 中取得最多數量的標籤字串
+String maxNumOfLabelInList(List<String> list) {
+  // 計算各標籤數量
+  var count = {"A1": 0, "A2": 0, "A3": 0, "A4": 0, "A5": 0};
+  for (var element in list) {
+    count[element] = count[element]! + 1;
+  }
+
+  // 尋找最大數值的標籤字串
+  var maxNum = 0;
+  var result = "";
+  count.forEach((key, value) {
+    if (value > maxNum) {
+      maxNum = value;
+      result = key;
+    }
+  });
+
+  return result;
+}
+
+/// 執行姿態模型
+Future<List> runPoseModel(Interpreter interpreter, img_lib.Image imgIn) async {
+  // 取得輸入輸出的格式資料
+  var shapeIn = interpreter.getInputTensor(0).shape;
+  var shapeOut = interpreter.getOutputTensor(0).shape;
+
+  var edge = shapeIn[1]; // 輸入影像邊長的長度
+  var resizedImg = resizeImgInSquare(imgIn, edge); // 縮放過後的圖片
+
+  // 設定模型輸入
+  var input = Float32List.fromList(resizedImg
+          .map((e) => e.map((e) => e.toDouble()).toList())
+          .toList()
+          .flatten())
+      .reshape(shapeIn);
+
+  // 計算模型輸出攤平過後的數量
+  var flatOutLen = 0;
+  for (var element in shapeOut) {
+    flatOutLen *= element;
+  }
+  // 設定模型輸出
+  var output = Float32List(flatOutLen).reshape(shapeOut);
+
+  // 運行模型
+  interpreter.run(input, output);
+
+  return output;
+}
+
 /// 等比例縮放圖片為正方形大小(其他區域會被繪製成黑色)
 img_lib.Image resizeImgInSquare(img_lib.Image imgIn, int edge) {
   // 圖片長寬所除的數值
@@ -170,4 +254,79 @@ img_lib.Image resizeImgInSquare(img_lib.Image imgIn, int edge) {
   }
 
   return imgOut;
+}
+
+/// 取得身體姿勢標籤
+/// kptList 格式為 [1, 1, 17, 3]
+String getLabel(List kptList) {
+  var result = "";
+
+  /// 關鍵點角度字典
+  /// key: 被計算的關鍵角度，Value: 和 Key 點連結的兩個關鍵點
+  var kptAngleDic = {
+    5: [7, 11], // 左肩膀
+    6: [8, 12], // 右肩膀
+    11: [5, 13], // 左腰部
+    12: [6, 14], // 右腰部
+    13: [11, 15], // 左膝蓋
+    14: [12, 16], // 右膝蓋
+  };
+
+  // 將關鍵點的資訊轉換成 [17, 2] 的角度
+  var positions = List<Vector2>.empty();
+  for (var kpt in kptList[0][0]) {
+    positions.add(Vector2(kpt[0], kpt[1]));
+  }
+
+  // 根據關鍵點角度字典，得到此專案會使用到的所有角度
+  var angles = List<double>.empty();
+  kptAngleDic.forEach((key, value) {
+    angles.add(
+        getAngle(positions[key], positions[value[0]], positions[value[1]]));
+  });
+
+  // 設定左右角度
+  var leftAngles = List<double>.empty();
+  var rightAngles = List<double>.empty();
+  for (var i = 0; i < angles.length; i += 2) {
+    leftAngles.add(angles[i]);
+    rightAngles.add(angles[i + 1]);
+  }
+
+  // 辨別姿勢標籤
+  if (0 <= rightAngles[2] && rightAngles[2] <= 90) {
+    result = "A5";
+  } else {
+    if (0 <= rightAngles[1] && rightAngles[1] <= 120) {
+      result = "A4";
+    } else if (120 < rightAngles[1] && rightAngles[1] <= 160) {
+      result = "A3";
+    } else {
+      if (90 <= rightAngles[0] && rightAngles[0] <= 180) {
+        result = "A2";
+      } else {
+        result = "A1";
+      }
+    }
+  }
+
+  return result;
+}
+
+/// 取得角度(取得 pA 的角度)
+/// 使用餘弦定理進行計算
+/// lineA = 邊BC
+/// lineB = 邊AC
+/// lineC = 邊AB
+double getAngle(Vector2 pA, Vector2 pB, Vector2 pC) {
+  // 計算各向量邊長
+  var lineA = (pB - pC).length;
+  var lineB = (pA - pC).length;
+  var lineC = (pA - pB).length;
+
+  // 計算角度
+  var result = radians(acos(
+      (pow(lineB, 2) + pow(lineC, 2) - pow(lineA, 2)) / (2 * lineB * lineC)));
+
+  return result;
 }
