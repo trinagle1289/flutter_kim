@@ -16,6 +16,7 @@
 * permission_handler: ^11.0.1
 * riverpod_annotation: ^2.2.1
 * tflite_flutter: ^0.10.3
+* vector_math: ^2.1.4
 <br>
 
 ### 開發專用插件:
@@ -54,7 +55,7 @@
 ### 新增 Flutter 套件指令
 ```bat
 REM 此段為安裝專案使用套件
-$ flutter pub add camera export_video_frame flutter_riverpod flutter_storage_path gal image image_picker path path_provider permission_handler riverpod_annotation tflite_flutter
+$ flutter pub add camera export_video_frame flutter_riverpod flutter_storage_path gal image image_picker path path_provider permission_handler riverpod_annotation tflite_flutter vector_math
 
 REM 此段為安裝開發使用套件
 $ flutter pub add dev:build_runner dev:custom_lint dev:riverpod_generator dev:riverpod_lint
@@ -73,6 +74,7 @@ $ flutter pub add dev:build_runner dev:custom_lint dev:riverpod_generator dev:ri
 * [path_provider](https://pub.dev/packages/path_provider)
 * [permission_handler](https://pub.dev/packages/permission_handler)
 * [tflite_flutter](https://pub.dev/packages/tflite_flutter)
+* [vector_math](https://pub.dev/packages/vector_math)
 <br>
 
 ### Git Commit 參考
