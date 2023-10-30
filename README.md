@@ -3,7 +3,7 @@
 此 Flutter 專案用於人因危害風險的評估，主要檢測 KIM-LHC(人工物料搬運) 的風險值評估，目前注重於 Android 的開發
 <br>
 
-#### 使用插件:
+### 使用插件:
 * camera: ^0.10.5+5
 * export_video_frame: ^0.0.7
 * flutter_riverpod: ^2.4.4
@@ -18,40 +18,40 @@
 * tflite_flutter: ^0.10.3
 <br>
 
-#### 開發專用插件:
+### 開發專用插件:
 * build_runner: ^2.4.6
 * custom_lint: ^0.5.5
 * riverpod_generator: ^2.3.5
 * riverpod_lint: ^2.3.2
 <br>
 
-#### Android Manifest 所需權限:
+### Android Manifest 所需權限:
 * android.permission.READ_EXTERNAL_STORAGE
 * android.permission.WRITE_EXTERNAL_STORAGE
 * android.permission.MANAGE_EXTERNAL_STORAGE
 * android.permission.CAMERA
 <br>
 
-#### Android build.gradle 所需設定:
+### Android build.gradle 所需設定:
 * minSdkVersion 26
 * compileSdkVersion 33
 <br>
 
-#### Android Manifest 添加權限方法:
+### Android Manifest 添加權限方法:
 以 android.permission.READ_EXTERNAL_STORAGE 為例，將此段程式碼放置於 android/app/src/main/AndroidManifest.xml 內的第二行中
 ```html
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 ```
 <br>
 
-#### Android build.gradle 設定方法:
+### Android build.gradle 設定方法:
 1. 修改 android/app/build.gradle 中的 minSdkVersion 和 compileSdkVersion 的參數為相應數值
 2. 以 minSdkVersion 為例，從 android/app/build.gradle 中進行修改，
    改為 minSdkVersion localProperties.getProperty('flutter.minSdkVersion').toInteger()。
    接著再新增 android/local.properties 內容為 flutter.minSdkVersion=26
 <br>
 
-#### 新增 Flutter 套件指令
+### 新增 Flutter 套件指令
 ```bat
 REM 此段為安裝專案使用套件
 $ flutter pub add camera export_video_frame flutter_riverpod flutter_storage_path gal image image_picker path path_provider permission_handler riverpod_annotation tflite_flutter
@@ -61,7 +61,7 @@ $ flutter pub add dev:build_runner dev:custom_lint dev:riverpod_generator dev:ri
 ```
 <br>
 
-#### Flutter 插件連結
+### Flutter 插件連結
 * [camera](https://pub.dev/packages/camera)
 * [export_video_frame](https://pub.dev/packages/export_video_frame)
 * [flutter_riverpod](https://pub.dev/packages/flutter_riverpod)
@@ -75,10 +75,9 @@ $ flutter pub add dev:build_runner dev:custom_lint dev:riverpod_generator dev:ri
 * [tflite_flutter](https://pub.dev/packages/tflite_flutter)
 <br>
 
-#### Git Commit 參考
+### Git Commit 參考
 
-##### <br>標題行的標準術語
-
+#### 標題行的標準術語
 **中文版:**
 | 標頭 | 定義 |
 | - | - |
@@ -115,3 +114,9 @@ $ flutter pub add dev:build_runner dev:custom_lint dev:riverpod_generator dev:ri
 > [Git Commit Message Standard](https://gist.github.com/tonibardina/9290fbc7d605b4f86919426e614fe692)
 > <br>
 > [Git Commit Message 這樣寫會更好，替專案引入規範與範例](https://wadehuanglearning.blogspot.com/2019/05/commit-commit-commit-why-what-commit.html)
+
+### 使用模型
+#### MoveNet
+
+此專案使用 TFLite 格式的模型
+版本為 singlepose-thunder
