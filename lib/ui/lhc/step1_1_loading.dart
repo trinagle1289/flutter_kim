@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_kim_lhc/main.dart';
 
@@ -10,8 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img_lib;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
-import 'package:gal/gal.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:vector_math/vector_math.dart';
 import 'package:media_info/media_info.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
