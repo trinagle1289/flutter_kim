@@ -36,5 +36,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/lhc/
+    - assets/lhc/Body_Posture/
+    - assets/lhc/Unfavourable_Working_Conditions/
     - assets/model/
