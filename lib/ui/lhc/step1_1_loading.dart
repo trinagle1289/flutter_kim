@@ -60,9 +60,9 @@ class _BodyFieldState extends ConsumerState<ConsumerStatefulWidget> {
       (_) async {
         // 設定介面文字，然後 Delay 1 秒，最後導向到介面 1-2
         ref.read(_loadingTextProvider.notifier).finish();
-        // Future.delayed(const Duration(seconds: 2));
-        // Navigator.push(
-        //     context, MaterialPageRoute(builder: (context) => getLhcApp("1-2")));
+        Future.delayed(const Duration(seconds: 2));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => getLhcApp("1-2")));
       },
     );
   }
@@ -109,7 +109,9 @@ Future<void> analyze() async {
     debugPrint("save image times: ${i + 1}");
   }
 
-  step1of1Data = await getBodyPostureRatingPoints(startFrames, endFrames);
+  step1of1Data = (await getBodyPostureRatingPoints(startFrames, endFrames))
+      .map((e) => e.toString())
+      .toList();
   debugPrint("start: \"${step1of1Data[0]}\", end:\"${step1of1Data[1]}\"");
 }
 
