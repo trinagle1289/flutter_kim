@@ -143,7 +143,11 @@ class PoseResultField extends ConsumerWidget {
 @riverpod
 class _PoseturePts extends _$PoseturePts {
   @override
-  int build() => _getPointByLabels(step1of1Data[0], step1of1Data[1]);
+  int build() {
+    step1of2Data =
+        _getPointByLabels(step1of1Data[0], step1of1Data[1]).toDouble();
+    return step1of2Data.toInt();
+  }
 }
 
 /// 開始姿勢圖片路徑
