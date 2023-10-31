@@ -16,9 +16,18 @@ import 'ui/lhc/step7.dart';
 import 'ui/lhc/step8.dart';
 
 /// 姿勢評級
-List step1of1Data = []; // 開始結束姿勢標籤(2個字串)
-int step1of2Data = 0; // 姿態評級
-List step2Data = [];
+var step1of1Data = List<String>.filled(2, ""); // 開始結束姿勢標籤(2 個字串)
+double step1of2Data = 0.0; // 姿態評級
+var step2Data = List<double>.filled(4, 0.0); // 身體姿勢 額外加分的部分(總共 4 類，最多計算 6 分)
+double step3Data = 0.0; // 時間評級
+double step4Data = 0.0; // 負重評級
+String step4GenderData = "男"; // 負重評級性別
+double step5Data = 0.0; // 力量傳遞/負重條件
+// 不良工作條件
+var step6fo1Data = List<double>.filled(2, 0.0); // [搬運/握持受限, 空間條件]
+var step6fo2Data = List<double>.filled(2, 0.0); // [手/手臂的位置與動作, 氣候條件]
+var step6fo3Data = List<double>.filled(2, 0.0); // [力量傳遞/應用受限, 衣服條件]
+double step7Data = 0.0; // 工作協調/時間分佈
 
 /// 主程式
 void main() => const TitleApp();
@@ -85,6 +94,15 @@ AppBar getTitleAppBar(String title) => AppBar(
 
 /// 重置資訊
 void reset() {
-  step1of1Data = [];
-  step1of2Data = -1;
+  step1of1Data = List<String>.filled(2, ""); // 開始結束姿勢標籤(2 個字串)
+  step1of2Data = 0.0; // 姿態評級
+  step2Data = List<double>.filled(4, 0.0); // 身體姿勢 額外加分(總共 4 類，最多計算 6 分)
+  step3Data = 0.0; // 時間評級
+  step4Data = 0.0; // 負重評級
+  step4GenderData = "男"; // 負重評級性別
+  step5Data = 0.0; // 力量傳遞/負重條件
+  step6fo1Data = List<double>.filled(2, 0.0); // 不良工作條件[搬運/握持受限, 空間條件]
+  step6fo2Data = List<double>.filled(2, 0.0); // 不良工作條件[手/手臂的位置與動作, 氣候條件]
+  step6fo3Data = List<double>.filled(2, 0.0); // 不良工作條件[力量傳遞/應用受限, 衣服條件]
+  step7Data = 0.0; // 工作協調/時間分佈
 }
