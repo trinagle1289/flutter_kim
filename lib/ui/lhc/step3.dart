@@ -3,14 +3,23 @@ import 'package:flutter_kim_lhc/main.dart';
 
 void main() => runApp(const Step3App());
 
-class Step3App extends StatefulWidget {
+class Step3App extends StatelessWidget {
   const Step3App({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(home: Step3Field());
+  }
+}
+
+class Step3Field extends StatefulWidget {
+  const Step3Field({super.key});
 
   @override
   Step3FieldState createState() => Step3FieldState();
 }
 
-class Step3FieldState extends State<Step3App> {
+class Step3FieldState extends State<Step3Field> {
   String? selectedOption;
 
   @override
@@ -30,51 +39,57 @@ class Step3FieldState extends State<Step3App> {
 
     var appBody = Stack(
       children: [
-        Expanded(
-          child: Align(
-            alignment: Alignment.center,
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  times3,
-                  times1,
-                  times3,
-                  times2,
-                  times3,
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 1.2)),
-                    child: DropdownButton<String>(
-                        value: selectedOption,
-                        hint: const Text(' 大約為', textAlign: TextAlign.center),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedOption = newValue;
-                          });
-                        },
-                        style:
-                            const TextStyle(fontSize: 25, color: Colors.black),
-                        items: <String>[
-                          '5次',
-                          '20次',
-                          '50次',
-                          '100次',
-                          '150次',
-                          '220次',
-                          '300次',
-                          '500次',
-                          '750次',
-                          '1000次',
-                          '1500次',
-                          '2000次',
-                          '2500次',
-                        ].map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                              value: value, child: Text(value));
-                        }).toList()),
-                  ),
-                ]),
-          ),
+        Column(
+          children: [
+            Expanded(
+              child: Align(
+                alignment: Alignment.center,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      times3,
+                      times1,
+                      times3,
+                      times2,
+                      times3,
+                      Container(
+                        decoration: BoxDecoration(
+                            border:
+                                Border.all(color: Colors.black, width: 1.2)),
+                        child: DropdownButton<String>(
+                            value: selectedOption,
+                            hint:
+                                const Text(' 大約為', textAlign: TextAlign.center),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedOption = newValue;
+                              });
+                            },
+                            style: const TextStyle(
+                                fontSize: 25, color: Colors.black),
+                            items: <String>[
+                              '5次',
+                              '20次',
+                              '50次',
+                              '100次',
+                              '150次',
+                              '220次',
+                              '300次',
+                              '500次',
+                              '750次',
+                              '1000次',
+                              '1500次',
+                              '2000次',
+                              '2500次',
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                  value: value, child: Text(value));
+                            }).toList()),
+                      ),
+                    ]),
+              ),
+            ),
+          ],
         ),
 
         // 下一步按鈕
@@ -146,10 +161,8 @@ class Step3FieldState extends State<Step3App> {
       ],
     );
 
-    return MaterialApp(
-      home: Scaffold(
-          appBar: AppBar(backgroundColor: Colors.blue, title: appTitle),
-          body: appBody),
-    );
+    return Scaffold(
+        appBar: AppBar(backgroundColor: Colors.blue, title: appTitle),
+        body: appBody);
   }
 }

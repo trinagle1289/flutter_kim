@@ -275,10 +275,9 @@ class Step2FieldState extends State<Step2Field> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 4, right: 8),
-                  child: Text(
-                    subtitle,
-                    style: const TextStyle(fontSize: 18, color: Colors.black),
-                  ),
+                  child: Text(subtitle,
+                      style:
+                          const TextStyle(fontSize: 18, color: Colors.black)),
                 ),
               ),
               const SizedBox(width: 8),

@@ -10,9 +10,7 @@ class Step1of3App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Step1of3Field(),
-    );
+    return const MaterialApp(home: Step1of3Field());
   }
 }
 
@@ -51,11 +49,8 @@ class Step1of3FieldState extends State<Step1of3Field> {
               ),
             ),
             const SizedBox(height: 20),
-            Image.asset(
-              _bodyPostureTable,
-              width: 370,
-              height: 370,
-            ),
+            // 身體姿勢表格
+            Image.asset(_bodyPostureTable, width: 370, height: 370),
             const SizedBox(height: 20),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               const Text(
@@ -64,13 +59,13 @@ class Step1of3FieldState extends State<Step1of3Field> {
               ),
               const SizedBox(width: 10),
               DropdownButton<String>(
-                  value: step1of2Data.toString(),
+                  value: step1of2Data.toInt().toString(),
                   items: [
                     '0',
-                    '03',
-                    '05',
-                    '07',
-                    '09',
+                    '3',
+                    '5',
+                    '7',
+                    '9',
                     '10',
                     '13',
                     '15',

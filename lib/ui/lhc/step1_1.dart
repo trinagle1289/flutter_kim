@@ -13,17 +13,14 @@ late List<CameraDescription> _cameras; // 相機列表
 late CameraController _controller; // 相機控制器
 var _videoAlbum = "KIM_Videos"; // 儲存影像的相簿
 
-Future<void> main() async => runApp(ProviderScope(child: Step1of1App()));
+void main() => runApp(Step1of1App());
 
 /// 步驟 1-1 介面
 // ignore: use_key_in_widget_constructors
 class Step1of1App extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) => MaterialApp(
-        home: Scaffold(
-          appBar: getTitleAppBar("步驟一"),
-          body: _BodyField(),
-        ),
+        home: Scaffold(appBar: getTitleAppBar("步驟一"), body: _BodyField()),
       );
 }
 

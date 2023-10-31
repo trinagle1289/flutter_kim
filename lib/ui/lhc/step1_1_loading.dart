@@ -16,7 +16,7 @@ part 'step1_1_loading.g.dart';
 
 var modelPath = "assets/model/singlepose-thunder-3.tflite";
 
-void main() => runApp(ProviderScope(child: Step1of1LoadingApp()));
+void main() => runApp(Step1of1LoadingApp());
 
 /// 步驟 1-1 的載入介面(用於計算身體姿勢結果)
 class Step1of1LoadingApp extends StatelessWidget {
@@ -25,7 +25,7 @@ class Step1of1LoadingApp extends StatelessWidget {
         title: "Loading Screen",
         home: Scaffold(
           appBar: getTitleAppBar("步驟一(1/3)"),
-          body: _BodyField(),
+          body: ProviderScope(child: _BodyField()),
         ),
       );
 }

@@ -66,6 +66,7 @@ class Step5FieldState extends State<Step5Field> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(height: 30),
+          // 副標題
           const Text(
             '力量傳遞/負重條件',
             style: TextStyle(
@@ -74,6 +75,7 @@ class Step5FieldState extends State<Step5Field> {
             ),
           ),
           const SizedBox(height: 30),
+          // 內容
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -88,22 +90,18 @@ class Step5FieldState extends State<Step5Field> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Positioned(
-                bottom: 30,
-                left: 20,
-                child: ElevatedButton(
-                  onPressed: () => Navigator.pop(context),
-                  style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
-                      ),
-                      backgroundColor: MaterialStateProperty.all(Colors.blue),
-                      minimumSize:
-                          MaterialStateProperty.all<Size>(const Size(170, 50))),
-                  child: const Text('上一步',
-                      style: TextStyle(fontSize: 30, color: Colors.white)),
-                ),
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0)),
+                    ),
+                    backgroundColor: MaterialStateProperty.all(Colors.blue),
+                    minimumSize:
+                        MaterialStateProperty.all<Size>(const Size(170, 50))),
+                child: const Text('上一步',
+                    style: TextStyle(fontSize: 30, color: Colors.white)),
               ),
               const SizedBox(width: 13),
 
@@ -118,24 +116,19 @@ class Step5FieldState extends State<Step5Field> {
                     }
                   }
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => getLhcApp("6-1")),
-                  );
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => getLhcApp("6-1")));
                 },
                 style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                  backgroundColor: MaterialStateProperty.all(Colors.blue),
-                  minimumSize:
-                      MaterialStateProperty.all<Size>(const Size(170, 50)),
-                ),
-                child: const Text(
-                  '下一步',
-                  style: TextStyle(fontSize: 30, color: Colors.white),
-                ),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0))),
+                    backgroundColor: MaterialStateProperty.all(Colors.blue),
+                    minimumSize:
+                        MaterialStateProperty.all<Size>(const Size(170, 50))),
+                child: const Text('下一步',
+                    style: TextStyle(fontSize: 30, color: Colors.white)),
               ),
             ],
           ),
