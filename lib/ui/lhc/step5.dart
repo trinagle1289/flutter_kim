@@ -108,13 +108,6 @@ class Step5FieldState extends State<Step5Field> {
               // 下一步按鈕
               ElevatedButton(
                 onPressed: () {
-                  int? selectedIndex;
-                  for (int i = 0; i < isSelected.length; i++) {
-                    if (isSelected[i]) {
-                      selectedIndex = i;
-                      break;
-                    }
-                  }
                   Navigator.push(
                       context,
                       MaterialPageRoute(
