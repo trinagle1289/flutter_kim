@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_kim_lhc/main.dart';
 
-int selectedOptionThreeValue = 0;
-int selectedOptionFourValue = 0;
+var handImgPath = 'assets/lhc/Unfavourable_Working_Conditions/hand_and_arm.png';
 
 void main() => runApp(const Step6of2App());
-
-var handImgPath = 'picture/img.png';
 
 class Step6of2App extends StatelessWidget {
   const Step6of2App({Key? key}) : super(key: key);
@@ -33,9 +30,9 @@ class Step6of2FieldState extends State<Step6of2Field> {
         if (i == index) {
           isOptionThreeSelected[i] = !isOptionThreeSelected[i];
           if (isOptionThreeSelected[i]) {
-            selectedOptionThreeValue = getOptionThreeValue(i);
+            step6fo2Data[0] = getOptionThreeValue(i).toDouble();
           } else {
-            selectedOptionThreeValue = -1;
+            step6fo2Data[0] = 0.0;
           }
         } else {
           isOptionThreeSelected[i] = false;
@@ -50,9 +47,9 @@ class Step6of2FieldState extends State<Step6of2Field> {
         if (i == index) {
           isOptionFourSelected[i] = !isOptionFourSelected[i];
           if (isOptionFourSelected[i]) {
-            selectedOptionFourValue = getOptionFourValue(i);
+            step6fo2Data[1] = getOptionFourValue(i).toDouble();
           } else {
-            selectedOptionFourValue = -1;
+            step6fo2Data[1] = 0.0;
           }
         } else {
           isOptionFourSelected[i] = false;
@@ -68,7 +65,7 @@ class Step6of2FieldState extends State<Step6of2Field> {
       case 1:
         return 2;
       default:
-        return -1;
+        return 0;
     }
   }
 
@@ -77,7 +74,7 @@ class Step6of2FieldState extends State<Step6of2Field> {
       case 0:
         return 1;
       default:
-        return -1;
+        return 0;
     }
   }
 
@@ -87,52 +84,33 @@ class Step6of2FieldState extends State<Step6of2Field> {
       appBar: AppBar(
         centerTitle: true,
         automaticallyImplyLeading: false,
-        title: const Text(
-          '步驟六(2/3)',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 40),
-        ),
+        title: const Text('步驟六(2/3)',
+            textAlign: TextAlign.center, style: TextStyle(fontSize: 40)),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const SizedBox(height: 30),
-          const Text(
-            '不良工作條件',
-            style: TextStyle(
-              fontSize: 42,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          const Text('不良工作條件',
+              style: TextStyle(fontSize: 42, fontWeight: FontWeight.bold)),
           const SizedBox(height: 5),
-          const Text(
-            '手/手臂的位置與動作',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-          ),
-          Image.asset(
-            handImgPath,
-            width: 350,
-            height: 90,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              buildCircularCheckboxTransport(0, '偶爾達到關節活動範圍極限'),
-              buildCircularCheckboxTransport(1, '經常達到關節活動範圍極限'),
-            ],
-          ),
+          const Text('手/手臂的位置與動作',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+
+          // 手/手臂圖片
+          Image.asset(handImgPath, width: 350, height: 90),
+
+          Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+            buildCircularCheckboxTransport(0, '偶爾達到關節活動範圍極限'),
+            buildCircularCheckboxTransport(1, '經常達到關節活動範圍極限'),
+          ]),
           const SizedBox(height: 5),
-          const Text(
-            '氣候條件',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(width: 8),
-              buildCircularCheckboxSpace(0, '熱、不舒服的吹風、寒冷、潮濕')
-            ],
-          ),
+          const Text('氣候條件',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+          Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+            const SizedBox(width: 8),
+            buildCircularCheckboxSpace(0, '熱、不舒服的吹風、寒冷、潮濕')
+          ]),
           const SizedBox(height: 5),
         ],
       ),
@@ -140,53 +118,42 @@ class Step6of2FieldState extends State<Step6of2Field> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: Padding(
           padding: const EdgeInsets.only(top: 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                style: ButtonStyle(
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            // 上一步按鈕
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0))),
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
                   minimumSize:
-                      MaterialStateProperty.all<Size>(const Size(170, 50)),
-                ),
-                child: const Text(
-                  '上一步',
-                  style: TextStyle(fontSize: 30, color: Colors.white),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => getLhcApp("6-3")),
-                  );
-                  // 在這裡處理下一步按鈕的程式碼
-                },
-                style: ButtonStyle(
+                      MaterialStateProperty.all<Size>(const Size(170, 50))),
+              child: const Text('上一步',
+                  style: TextStyle(fontSize: 30, color: Colors.white)),
+            ),
+
+            // 下一步按鈕
+            ElevatedButton(
+              // 在這裡處理下一步按鈕的程式碼
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => getLhcApp("6-3")));
+              },
+              style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0))),
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
                   minimumSize:
-                      MaterialStateProperty.all<Size>(const Size(170, 50)),
-                ),
-                child: const Text(
-                  '下一步',
-                  style: TextStyle(fontSize: 30, color: Colors.white),
-                ),
-              ),
-            ],
-          ),
+                      MaterialStateProperty.all<Size>(const Size(170, 50))),
+              child: const Text('下一步',
+                  style: TextStyle(fontSize: 30, color: Colors.white)),
+            ),
+          ]),
         ),
       ),
     );
@@ -197,30 +164,25 @@ class Step6of2FieldState extends State<Step6of2Field> {
       padding: const EdgeInsets.symmetric(vertical: 0),
       child: Center(
         child: ListTile(
-          title: Row(
-            children: [
+            title: Row(children: [
               Checkbox(
-                value: isOptionThreeSelected[index],
-                onChanged: (value) {
-                  updateTransportSelectedIndex(index);
-                },
-                shape: const CircleBorder(),
-                activeColor: Colors.blue,
-              ),
+                  value: isOptionThreeSelected[index],
+                  onChanged: (value) {
+                    updateTransportSelectedIndex(index);
+                  },
+                  shape: const CircleBorder(),
+                  activeColor: Colors.blue),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 4, right: 8),
-                  child: Text(
-                    subtitle,
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
+                  child: Text(subtitle,
+                      style:
+                          const TextStyle(fontSize: 20, color: Colors.black)),
                 ),
               ),
               const SizedBox(width: 8),
-            ],
-          ),
-          contentPadding: const EdgeInsets.all(0),
-        ),
+            ]),
+            contentPadding: const EdgeInsets.all(0)),
       ),
     );
   }
@@ -230,16 +192,14 @@ class Step6of2FieldState extends State<Step6of2Field> {
       padding: const EdgeInsets.symmetric(vertical: 0),
       child: Center(
         child: ListTile(
-          title: Row(
-            children: [
+            title: Row(children: [
               Checkbox(
-                value: isOptionFourSelected[index],
-                onChanged: (value) {
-                  updateSpaceSelectedIndex(index);
-                },
-                shape: const CircleBorder(),
-                activeColor: Colors.blue,
-              ),
+                  value: isOptionFourSelected[index],
+                  onChanged: (value) {
+                    updateSpaceSelectedIndex(index);
+                  },
+                  shape: const CircleBorder(),
+                  activeColor: Colors.blue),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 4, right: 8),
@@ -250,10 +210,8 @@ class Step6of2FieldState extends State<Step6of2Field> {
                 ),
               ),
               const SizedBox(width: 8),
-            ],
-          ),
-          contentPadding: const EdgeInsets.all(0),
-        ),
+            ]),
+            contentPadding: const EdgeInsets.all(0)),
       ),
     );
   }

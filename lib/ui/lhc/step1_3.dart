@@ -57,15 +57,13 @@ class Step1of3FieldState extends State<Step1of3Field> {
               height: 370,
             ),
             const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  '姿勢評級:',
-                  style: TextStyle(fontSize: 20),
-                ),
-                const SizedBox(width: 10),
-                DropdownButton<String>(
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              const Text(
+                '姿勢評級:',
+                style: TextStyle(fontSize: 20),
+              ),
+              const SizedBox(width: 10),
+              DropdownButton<String>(
                   value: step1of2Data.toString(),
                   items: [
                     '0',
@@ -99,12 +97,10 @@ class Step1of3FieldState extends State<Step1of3Field> {
                   }).toList(),
                   onChanged: (value) {
                     setState(() {
-                      step1of2Data = int.parse(value!);
+                      step1of2Data = double.parse(value!);
                     });
-                  },
-                ),
-              ],
-            ),
+                  }),
+            ]),
             const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () {

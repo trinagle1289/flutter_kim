@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_kim_lhc/main.dart';
 
-int? val;
-
-enum Gender { MAN, WOMAN }
+enum Gender { man, woman }
 
 Gender? selectedGender;
 
@@ -16,21 +14,13 @@ class Step4App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-            backgroundColor: Colors.blue,
-            flexibleSpace: Container(
-              color: Colors.blue,
-            ),
-            centerTitle: true,
-            automaticallyImplyLeading: false,
-            title: const Text(
-              '步驟四',
-              style: TextStyle(fontSize: 40),
-            )),
-        body: const Center(
-          child: RadioExample(),
-        ),
-      ),
+          appBar: AppBar(
+              backgroundColor: Colors.blue,
+              flexibleSpace: Container(color: Colors.blue),
+              centerTitle: true,
+              automaticallyImplyLeading: false,
+              title: const Text('步驟四', style: TextStyle(fontSize: 40))),
+          body: const Center(child: RadioExample())),
     );
   }
 }
@@ -76,186 +66,143 @@ class _RadioExampleState extends State<RadioExample> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Text(
-          '               ',
-          style: TextStyle(fontSize: 20),
+    return Column(children: [
+      const Text('               ', style: TextStyle(fontSize: 20)),
+      const Center(
+        child: Text('負重評級',
+            style: TextStyle(fontSize: 42, fontWeight: FontWeight.bold)),
+      ),
+      const Text('               ', style: TextStyle(fontSize: 20)),
+      Row(children: [
+        Expanded(
+          child: RadioListTile<Gender>(
+              title: const Text('男性', style: TextStyle(fontSize: 30)),
+              value: Gender.man,
+              groupValue: selectedGender,
+              onChanged: (value) {
+                setState(() {
+                  selectedGender = value;
+                  step4GenderData = selectedGender == Gender.man ? "男" : "女";
+                });
+              }),
         ),
-        const Center(
-          child: Text(
-            '負重評級',
-            style: TextStyle(fontSize: 42, fontWeight: FontWeight.bold),
-          ),
+        Expanded(
+          child: RadioListTile<Gender>(
+              title: const Text('女性', style: TextStyle(fontSize: 30)),
+              value: Gender.woman,
+              groupValue: selectedGender,
+              onChanged: (value) {
+                setState(() {
+                  selectedGender = value;
+                  step4GenderData = selectedGender == Gender.man ? "男" : "女";
+                });
+              }),
         ),
-        const Text(
-          '               ',
-          style: TextStyle(fontSize: 20),
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: RadioListTile<Gender>(
-                title: const Text('男性', style: TextStyle(fontSize: 30)),
-                value: Gender.MAN,
-                groupValue: selectedGender,
-                onChanged: (value) {
-                  setState(() {
-                    selectedGender = value;
-                  });
-                },
-              ),
-            ),
-            Expanded(
-              child: RadioListTile<Gender>(
-                title: const Text('女性', style: TextStyle(fontSize: 30)),
-                value: Gender.WOMAN,
-                groupValue: selectedGender,
-                onChanged: (value) {
-                  setState(() {
-                    selectedGender = value;
-                  });
-                },
-              ),
-            ),
-          ],
-        ),
-        const Text(
-          '               ',
-          style: TextStyle(fontSize: 20),
-        ),
-        const Text(
-          '負重量(kg)',
-          style: TextStyle(fontSize: 30),
-        ),
-        const Text(
-          '               ',
-          style: TextStyle(fontSize: 20),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.black,
-              width: 1.2,
-            ),
-          ),
-          child: IgnorePointer(
-            ignoring: selectedGender == null,
-            child: DropdownButton<String>(
+      ]),
+      const Text('               ', style: TextStyle(fontSize: 20)),
+      const Text('負重量(kg)', style: TextStyle(fontSize: 30)),
+      const Text('               ', style: TextStyle(fontSize: 20)),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.black, width: 1.2)),
+        child: IgnorePointer(
+          ignoring: selectedGender == null,
+          child: DropdownButton<String>(
               hint: const Text('大約為', textAlign: TextAlign.center),
               value: selectedOption,
               items: dropdownOptions.map((option) {
                 return DropdownMenuItem<String>(
-                  value: option,
-                  child: Text(option),
-                );
+                    value: option, child: Text(option));
               }).toList(),
               onChanged: (value) {
                 setState(() {
                   selectedOption = value;
                   if (selectedOption != null && selectedGender != null) {
-                    if (selectedGender == Gender.MAN) {
+                    if (selectedGender == Gender.man) {
                       if (selectedOption == '3-5公斤') {
-                        val = 4;
+                        step4Data = 4.0;
                       } else if (selectedOption == '大於5-10公斤') {
-                        val = 6;
+                        step4Data = 6.0;
                       } else if (selectedOption == '大於10-15公斤') {
-                        val = 8;
+                        step4Data = 8.0;
                       } else if (selectedOption == '大於15-20公斤') {
-                        val = 11;
+                        step4Data = 11.0;
                       } else if (selectedOption == '大於20-25公斤') {
-                        val = 15;
+                        step4Data = 15.0;
                       } else if (selectedOption == '大於25-30公斤') {
-                        val = 25;
+                        step4Data = 25.0;
                       } else if (selectedOption == '大於30-35公斤') {
-                        val = 35;
+                        step4Data = 35.0;
                       } else if (selectedOption == '大於35-40公斤') {
-                        val = 75;
+                        step4Data = 75.0;
                       } else if (selectedOption == '大於40公斤') {
-                        val = 100;
+                        step4Data = 100.0;
                       }
-                    } else if (selectedGender == Gender.WOMAN) {
+                    } else if (selectedGender == Gender.woman) {
                       if (selectedOption == '3-5公斤') {
-                        val = 6;
+                        step4Data = 6.0;
                       } else if (selectedOption == '大於5-10公斤') {
-                        val = 9;
+                        step4Data = 9.0;
                       } else if (selectedOption == '大於10-15公斤') {
-                        val = 12;
+                        step4Data = 12.0;
                       } else if (selectedOption == '大於15-20公斤') {
-                        val = 25;
+                        step4Data = 25.0;
                       } else if (selectedOption == '大於20-25公斤') {
-                        val = 75;
+                        step4Data = 75.0;
                       } else if (selectedOption == '大於25-30公斤') {
-                        val = 85;
+                        step4Data = 85.0;
                       } else if (selectedOption == '大於30-35公斤') {
-                        val = 100;
+                        step4Data = 100.0;
                       } else if (selectedOption == '大於35-40公斤') {
-                        val = 100;
+                        step4Data = 100.0;
                       } else if (selectedOption == '大於40公斤') {
-                        val = 100;
+                        step4Data = 100.0;
                       }
                     }
                   }
                 });
+              }),
+        ),
+      ),
+      const SizedBox(height: 20),
+      const Spacer(),
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        // 上一步按鈕
+        Padding(
+          padding: const EdgeInsets.only(bottom: 30.0),
+          child: ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0))),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.blue),
+                  minimumSize: MaterialStateProperty.all<Size>(Size(170, 50))),
+              child: const Text('上一步', style: TextStyle(fontSize: 30))),
+        ),
+
+        const SizedBox(width: 13),
+
+        // 下一步按鈕
+        Padding(
+          padding: const EdgeInsets.only(bottom: 30.0),
+          child: ElevatedButton(
+              onPressed: () {
+                print(nothing);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => getLhcApp("5")));
               },
-            ),
-          ),
-        ),
-        const SizedBox(height: 20),
-        const Spacer(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 30.0),
-              child: ElevatedButton(
-                onPressed: () => Navigator.pop(context),
-                style: ButtonStyle(
+              style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0))),
                   backgroundColor:
                       MaterialStateProperty.all<Color>(Colors.blue),
-                  minimumSize: MaterialStateProperty.all<Size>(Size(170, 50)),
-                ),
-                child: const Text(
-                  '上一步',
-                  style: TextStyle(fontSize: 30),
-                ),
-              ),
-            ),
-            const SizedBox(width: 13),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 30.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  print(nothing);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => getLhcApp("5")),
-                  );
-                },
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue),
-                  minimumSize: MaterialStateProperty.all<Size>(Size(170, 50)),
-                ),
-                child: const Text(
-                  '下一步',
-                  style: TextStyle(fontSize: 30),
-                ),
-              ),
-            ),
-          ],
+                  minimumSize: MaterialStateProperty.all<Size>(Size(170, 50))),
+              child: const Text('下一步', style: TextStyle(fontSize: 30))),
         ),
-      ],
-    );
+      ]),
+    ]);
   }
 }

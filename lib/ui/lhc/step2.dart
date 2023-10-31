@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_kim_lhc/main.dart';
 
-int c1 = -1;
-int c2 = -1;
 double c3 = -1;
 int c4 = -1;
 
@@ -42,9 +40,9 @@ class Step2FieldState extends State<Step2Field> {
         if (i == index) {
           c1Select[i] = !c1Select[i];
           if (c1Select[i]) {
-            c1 = getc1Value(i);
+            step2Data[0] = getc1Value(i);
           } else {
-            c1 = -1;
+            step2Data[0] = 0.0;
           }
         } else {
           c1Select[i] = false;
@@ -59,9 +57,9 @@ class Step2FieldState extends State<Step2Field> {
         if (i == index) {
           c2Select[i] = !c2Select[i];
           if (c2Select[i]) {
-            c2 = getc2Value(i);
+            step2Data[1] = getc2Value(i);
           } else {
-            c2 = -1;
+            step2Data[1] = 0.0;
           }
         } else {
           c2Select[i] = false;
@@ -76,9 +74,9 @@ class Step2FieldState extends State<Step2Field> {
         if (i == index) {
           c3Select[i] = !c3Select[i];
           if (c3Select[i]) {
-            c3 = getc3Value(i).toDouble();
+            step2Data[2] = getc3Value(i);
           } else {
-            c3 = -1;
+            step2Data[2] = 0.0;
           }
         } else {
           c3Select[i] = false;
@@ -93,9 +91,9 @@ class Step2FieldState extends State<Step2Field> {
         if (i == index) {
           c4Select[i] = !c4Select[i];
           if (c4Select[i]) {
-            c4 = getc4Value(i);
+            step2Data[3] = getc4Value(i);
           } else {
-            c4 = -1;
+            step2Data[3] = 0.0;
           }
         } else {
           c4Select[i] = false;
@@ -104,47 +102,47 @@ class Step2FieldState extends State<Step2Field> {
     });
   }
 
-  int getc1Value(int index) {
+  double getc1Value(int index) {
     switch (index) {
       case 0:
-        return 1;
+        return 1.0;
       case 1:
-        return 3;
+        return 3.0;
       default:
-        return -1;
+        return 0.0;
     }
   }
 
-  int getc2Value(int index) {
+  double getc2Value(int index) {
     switch (index) {
       case 0:
-        return 1;
+        return 1.0;
       case 1:
-        return 3;
+        return 3.0;
       default:
-        return -1;
+        return 0.0;
     }
   }
 
-  num getc3Value(int index) {
+  double getc3Value(int index) {
     switch (index) {
       case 0:
         return 0.5;
       case 1:
-        return 1;
+        return 1.0;
       default:
-        return -1;
+        return 0.0;
     }
   }
 
-  int getc4Value(int index) {
+  double getc4Value(int index) {
     switch (index) {
       case 0:
-        return 1;
+        return 1.0;
       case 1:
-        return 2;
+        return 2.0;
       default:
-        return -1;
+        return 0.0;
     }
   }
 
@@ -220,50 +218,40 @@ class Step2FieldState extends State<Step2Field> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: Padding(
           padding: const EdgeInsets.only(top: 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton(
-                onPressed: () => Navigator.pop(context),
-                style: ButtonStyle(
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            // 上一步按鈕
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0))),
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
                   minimumSize:
-                      MaterialStateProperty.all<Size>(const Size(170, 50)),
-                ),
-                child: const Text(
-                  '上一步',
-                  style: TextStyle(fontSize: 30, color: Colors.white),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => getLhcApp("3")),
-                  );
-                },
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      MaterialStateProperty.all<Size>(const Size(170, 50))),
+              child: const Text('上一步',
+                  style: TextStyle(fontSize: 30, color: Colors.white)),
+            ),
+
+            // 下一步按鈕
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => getLhcApp("3")));
+              },
+              style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                  backgroundColor: MaterialStateProperty.all(Colors.blue),
-                  minimumSize:
-                      MaterialStateProperty.all<Size>(const Size(170, 50)),
-                ),
-                child: const Text(
-                  '下一步',
-                  style: TextStyle(fontSize: 30, color: Colors.white),
-                ),
+                        borderRadius: BorderRadius.circular(20.0))),
+                backgroundColor: MaterialStateProperty.all(Colors.blue),
+                minimumSize:
+                    MaterialStateProperty.all<Size>(const Size(170, 50)),
               ),
-            ],
-          ),
+              child: const Text('下一步',
+                  style: TextStyle(fontSize: 30, color: Colors.white)),
+            ),
+          ]),
         ),
       ),
     );

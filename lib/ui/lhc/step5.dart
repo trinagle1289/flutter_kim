@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_kim_lhc/main.dart';
 
-int selectedOptionValue = -1;
-
 void main() => runApp(const Step5App());
 
 class Step5App extends StatelessWidget {
@@ -31,7 +29,7 @@ class Step5FieldState extends State<Step5Field> {
       for (int i = 0; i < isSelected.length; i++) {
         if (i == index) {
           isSelected[i] = true;
-          selectedOptionValue = getOptionValue(i); // 更新選擇的結果
+          step5Data = getOptionValue(i).toDouble(); // 更新選擇的結果
         } else {
           isSelected[i] = false;
         }
@@ -48,7 +46,7 @@ class Step5FieldState extends State<Step5Field> {
       case 2:
         return 4; // 不良對應到4
       default:
-        return -1;
+        return 0;
     }
   }
 
@@ -96,22 +94,20 @@ class Step5FieldState extends State<Step5Field> {
                 child: ElevatedButton(
                   onPressed: () => Navigator.pop(context),
                   style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
                       ),
-                    ),
-                    backgroundColor: MaterialStateProperty.all(Colors.blue),
-                    minimumSize:
-                        MaterialStateProperty.all<Size>(const Size(170, 50)),
-                  ),
-                  child: const Text(
-                    '上一步',
-                    style: TextStyle(fontSize: 30, color: Colors.white),
-                  ),
+                      backgroundColor: MaterialStateProperty.all(Colors.blue),
+                      minimumSize:
+                          MaterialStateProperty.all<Size>(const Size(170, 50))),
+                  child: const Text('上一步',
+                      style: TextStyle(fontSize: 30, color: Colors.white)),
                 ),
               ),
               const SizedBox(width: 13),
+
+              // 下一步按鈕
               ElevatedButton(
                 onPressed: () {
                   int? selectedIndex;
