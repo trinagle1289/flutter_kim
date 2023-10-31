@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_kim_lhc/main.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() => runApp(const TitleApp());
+void main() => runApp(const ProviderScope(child: TitleApp()));
 
 /// 開頭靜態介面
 class TitleApp extends StatelessWidget {
@@ -10,18 +11,17 @@ class TitleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'KIM UI',
-      theme: ThemeData(
-        primaryColor: const Color.fromRGBO(245, 147, 147, 1),
-        buttonTheme: ButtonThemeData(
-          textTheme: ButtonTextTheme.primary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
+        title: 'KIM UI',
+        theme: ThemeData(
+          primaryColor: const Color.fromRGBO(245, 147, 147, 1),
+          buttonTheme: ButtonThemeData(
+            textTheme: ButtonTextTheme.primary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
           ),
         ),
-      ),
-      home: const TitleKIMSelectionPage(),
-    );
+        home: const TitleKIMSelectionPage());
   }
 }
 
@@ -88,9 +88,7 @@ class TitleKIMSelectionPage extends StatelessWidget {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (context) => getLhcApp("1-1"),
-          ),
+          MaterialPageRoute(builder: (context) => getLhcApp("1-1")),
         );
       },
       child: const SizedBox(
