@@ -20,7 +20,7 @@ void main() => runApp(Step1of1App());
 class Step1of1App extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) => MaterialApp(
-        home: Scaffold(appBar: getTitleAppBar("步驟一"), body: _BodyField()),
+        home: Scaffold(appBar: getTitleAppBar("步驟一(1/3)"), body: _BodyField()),
       );
 }
 
