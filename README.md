@@ -5,11 +5,13 @@
 
 ### 使用插件:
 * camera: ^0.10.5+5
+* flutter_launcher_icons: ^0.13.1
 * flutter_riverpod: ^2.4.4
 * flutter_storage_path: ^1.0.4
 * gal: ^2.1.2
 * image: ^4.1.3
 * image_picker: ^1.0.4
+* media_info: ^0.12.0+2
 * path: ^1.8.3
 * path_provider: ^2.1.1
 * permission_handler: ^11.0.1
@@ -17,7 +19,6 @@
 * tflite_flutter: ^0.10.3
 * vector_math: ^2.1.4
 * video_thumbnail: ^0.5.3
-* media_info: ^0.12.0+2
 <br>
 
 ### 開發專用插件:
@@ -59,24 +60,25 @@ REM 此段為安裝專案使用套件
 $ flutter pub add camera flutter_riverpod flutter_storage_path gal image image_picker path path_provider permission_handler riverpod_annotation tflite_flutter vector_math video_thumbnail media_info
 
 REM 此段為安裝開發使用套件
-$ flutter pub add dev:build_runner dev:custom_lint dev:riverpod_generator dev:riverpod_lint
+$ flutter pub add dev:build_runner dev:custom_lint dev:flutter_launcher_icons dev:riverpod_generator dev:riverpod_lint
 ```
 <br>
 
 ### Flutter 插件連結
 * [camera](https://pub.dev/packages/camera)
+* [flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons)
 * [flutter_riverpod](https://pub.dev/packages/flutter_riverpod)
 * [flutter_storage_path](https://pub.dev/packages/flutter_storage_path)
 * [gal](https://pub.dev/packages/gal)
 * [image](https://pub.dev/packages/image)
 * [image_picker](https://pub.dev/packages/image_picker)
+* [media_info](https://pub.dev/packages/media_info)
 * [path](https://pub.dev/packages/path)
 * [path_provider](https://pub.dev/packages/path_provider)
 * [permission_handler](https://pub.dev/packages/permission_handler)
 * [tflite_flutter](https://pub.dev/packages/tflite_flutter)
 * [vector_math](https://pub.dev/packages/vector_math)
 * [video_thumbnail](https://pub.dev/packages/video_thumbnail) 
-* [media_info](https://pub.dev/packages/media_info)
 <br>
 
 ### Git Commit 參考
