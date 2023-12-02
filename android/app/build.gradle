@@ -49,6 +49,10 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        // 修正 Realease 包錯誤問題
+        // 解決方法(https://stackoverflow.com/questions/71075776/flutter-initialization-failed-couldnt-find-libflutter-so)
+        ndk.abiFilters 'armeabi-v7a', 'arm64-v8a','x86_64'
     }
 
     buildTypes {
