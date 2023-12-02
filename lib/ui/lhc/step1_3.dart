@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_kim_lhc/main.dart';
+import 'package:flutter_kim/main.dart';
 
 var _bodyPostureTable = 'assets/lhc/Body_Posture/table.png';
 

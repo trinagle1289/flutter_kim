@@ -1,4 +1,4 @@
-package com.example.flutter_kim_lhc
+package com.example.flutter_kim
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_kim_lhc/main.dart';
+import 'package:flutter_kim/main.dart';
 
 void main() => runApp(const Step7App());
 
