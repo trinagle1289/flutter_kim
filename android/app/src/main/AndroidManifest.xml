@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     
     <application
-        android:label="KIM 量表評估工具"
+        android:label="榮靜計畫 - KIM 量表評估工具"
         android:name="${applicationName}"
         android:icon="@mipmap/kim_icon">
         <activity
