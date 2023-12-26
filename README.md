@@ -3,6 +3,10 @@
 此 Flutter 專案用於人因危害風險的評估，主要檢測 KIM-LHC(人工物料搬運) 的風險值評估，目前注重於 Android 的開發
 <br>
 
+### 注意事項
+切記!一定要先將模型放置於 assets/model/ 資料夾下  
+並且將其命名為 singlepose-thunder-3.tflite
+
 ### 使用插件:
 * camera: ^0.10.5+5
 * flutter_launcher_icons: ^0.13.1
