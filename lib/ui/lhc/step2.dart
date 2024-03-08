@@ -149,70 +149,72 @@ class Step2FieldState extends State<Step2Field> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        title: const Text(
-          '步驟二',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 40),
-        ),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const SizedBox(height: 30),
-          const Text(
-            '身體姿勢 額外加分',
-            style: TextStyle(
-              fontSize: 42,
-              fontWeight: FontWeight.bold,
+      appBar: getTitleAppBar('Step 2'),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(height: 30),
+            const Text(
+              'Pody Posture\n(Additional Points)',
+              style: TextStyle(
+                fontSize: 35,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          const SizedBox(height: 0),
-          // const Text(
-          //   '額外加分',
-          //   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-          // ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(width: 4),
-              buildCircularCheckboxC1(0, '軀幹偶爾扭轉、側傾'),
-              buildCircularCheckboxC1(1, '軀幹經常扭轉、側傾'),
-            ],
-          ),
-          const SizedBox(height: 10),
+            const SizedBox(height: 0),
+            // const Text(
+            //   '額外加分',
+            //   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            // ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(width: 4),
+                buildCircularCheckboxC1(0,
+                    'Occasional twisting and/or lateral inclination of the trunk identifiable.'),
+                buildCircularCheckboxC1(1,
+                    'Frequent / constant twisting and/or lateral inclination of the trunk identifiable'),
+              ],
+            ),
+            const SizedBox(height: 10),
 
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(width: 8),
-              buildCircularCheckboxC2(0, '負重重心或手偶爾遠離身體'),
-              buildCircularCheckboxC2(1, '負重重心或手經常遠離身體'),
-            ],
-          ),
-          const SizedBox(height: 10),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(width: 8),
+                buildCircularCheckboxC2(0,
+                    'Load centre and/or hands occasionally at a distance from the body'),
+                buildCircularCheckboxC2(1,
+                    'Load centre and/or hands frequently / constantly at a distance from the body'),
+              ],
+            ),
+            const SizedBox(height: 10),
 
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(width: 8),
-              buildCircularCheckboxC3(0, '手臂偶爾需抬舉，手位於手肘與肩膀之間'),
-              buildCircularCheckboxC3(1, '手臂經常需抬舉，手位於手肘與肩膀之間'),
-            ],
-          ),
-          const SizedBox(height: 10),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(width: 8),
+                buildCircularCheckboxC3(0,
+                    'Arms raised occasionally, hands between elbow and shoulder level'),
+                buildCircularCheckboxC3(1,
+                    'Arms raised frequently / constantly, hands between elbow and shoulder level'),
+              ],
+            ),
+            const SizedBox(height: 10),
 
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(width: 8),
-              buildCircularCheckboxC4(0, '手偶爾會高過肩膀'),
-              buildCircularCheckboxC4(1, '手經常會高過肩膀'),
-            ],
-          ),
-        ],
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(width: 8),
+                buildCircularCheckboxC4(
+                    0, 'Hands occasionally above shoulder height'),
+                buildCircularCheckboxC4(
+                    1, 'Hands frequently / constantly above shoulder height'),
+              ],
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
@@ -230,7 +232,7 @@ class Step2FieldState extends State<Step2Field> {
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
                   minimumSize:
                       MaterialStateProperty.all<Size>(const Size(170, 50))),
-              child: const Text('上一步',
+              child: const Text('Back',
                   style: TextStyle(fontSize: 30, color: Colors.white)),
             ),
 
@@ -248,7 +250,7 @@ class Step2FieldState extends State<Step2Field> {
                 minimumSize:
                     MaterialStateProperty.all<Size>(const Size(170, 50)),
               ),
-              child: const Text('下一步',
+              child: const Text('Next',
                   style: TextStyle(fontSize: 30, color: Colors.white)),
             ),
           ]),

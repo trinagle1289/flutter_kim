@@ -24,17 +24,15 @@ class Step3FieldState extends State<Step3Field> {
 
   @override
   Widget build(BuildContext context) {
-    var appTitle = const Align(
-        alignment: Alignment.center,
-        child:
-            Text('步驟三', style: TextStyle(fontSize: 40, color: Colors.white)));
+    var appTitle = getTitleAppBar('Step 3');
 
-    var times1 = const Text('時間評級',
+    var times1 = const Text('Time Rating Points',
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: 42, fontWeight: FontWeight.bold));
     var times3 = const Text('                           ',
         style: TextStyle(fontSize: 20));
-    var times2 = const Text('步驟一動作的每日執行次數',
+    var times2 = const Text('Number of daily executions of step 1 action',
+        textAlign: TextAlign.center,
         style: TextStyle(fontSize: 30, color: Colors.black));
 
     var appBody = Stack(
@@ -58,8 +56,8 @@ class Step3FieldState extends State<Step3Field> {
                                 Border.all(color: Colors.black, width: 1.2)),
                         child: DropdownButton<String>(
                             value: selectedOption,
-                            hint:
-                                const Text(' 大約為', textAlign: TextAlign.center),
+                            hint: const Text(' approx.',
+                                textAlign: TextAlign.center),
                             onChanged: (String? newValue) {
                               setState(() {
                                 selectedOption = newValue;
@@ -139,7 +137,8 @@ class Step3FieldState extends State<Step3Field> {
                       MaterialStateProperty.all<Color>(Colors.blue),
                   minimumSize:
                       MaterialStateProperty.all<Size>(const Size(170, 50))),
-              child: const Text('下一步', style: TextStyle(fontSize: 30))),
+              child: const Text('Next',
+                  style: TextStyle(fontSize: 30, color: Colors.white))),
         ),
 
         // 上一步按鈕
@@ -155,7 +154,8 @@ class Step3FieldState extends State<Step3Field> {
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                 minimumSize:
                     MaterialStateProperty.all<Size>(const Size(170, 50))),
-            child: const Text('上一步', style: TextStyle(fontSize: 30)),
+            child: const Text('Back',
+                style: TextStyle(fontSize: 30, color: Colors.white)),
           ),
         ),
       ],

@@ -81,35 +81,35 @@ class Step6of2FieldState extends State<Step6of2Field> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        title: const Text('步驟六(2/3)',
-            textAlign: TextAlign.center, style: TextStyle(fontSize: 40)),
-      ),
+      appBar: getTitleAppBar('Step 6(2/3)'),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const SizedBox(height: 30),
-          const Text('不良工作條件',
+          const Text('Unfavourable working conditions',
+              textAlign: TextAlign.center,
               style: TextStyle(fontSize: 42, fontWeight: FontWeight.bold)),
           const SizedBox(height: 5),
-          const Text('手/手臂的位置與動作',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+          const Text('Hand/arm position and movement',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
 
           // 手/手臂圖片
           Image.asset(handImgPath, width: 350, height: 90),
 
           Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-            buildCircularCheckboxTransport(0, '偶爾達到關節活動範圍極限'),
-            buildCircularCheckboxTransport(1, '經常達到關節活動範圍極限'),
+            buildCircularCheckboxTransport(
+                0, 'Occasionally at the limit of the movement ranges'),
+            buildCircularCheckboxTransport(
+                1, 'Frequently/constantly at the limit of the movement ranges'),
           ]),
           const SizedBox(height: 5),
-          const Text('氣候條件',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+          const Text('Adverse ambient conditions',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           Column(mainAxisAlignment: MainAxisAlignment.start, children: [
             const SizedBox(width: 8),
-            buildCircularCheckboxSpace(0, '熱、不舒服的吹風、寒冷、潮濕')
+            buildCircularCheckboxSpace(0,
+                'Unfavourable weather conditions and/or physical workloads caused by heat, draught, cold, wet')
           ]),
           const SizedBox(height: 5),
         ],
@@ -132,7 +132,7 @@ class Step6of2FieldState extends State<Step6of2Field> {
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
                   minimumSize:
                       MaterialStateProperty.all<Size>(const Size(170, 50))),
-              child: const Text('上一步',
+              child: const Text('Back',
                   style: TextStyle(fontSize: 30, color: Colors.white)),
             ),
 
@@ -150,7 +150,7 @@ class Step6of2FieldState extends State<Step6of2Field> {
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
                   minimumSize:
                       MaterialStateProperty.all<Size>(const Size(170, 50))),
-              child: const Text('下一步',
+              child: const Text('Next',
                   style: TextStyle(fontSize: 30, color: Colors.white)),
             ),
           ]),

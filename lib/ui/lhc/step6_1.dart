@@ -81,39 +81,41 @@ class Step6of1FieldState extends State<Step6of1Field> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        title: const Text('步驟六(1/3)',
-            textAlign: TextAlign.center, style: TextStyle(fontSize: 40)),
-      ),
-      body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        const SizedBox(height: 30),
-        const Text('不良工作條件',
-            style: TextStyle(fontSize: 42, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 5),
-        const Text('搬運/握持受限',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
+      appBar: getTitleAppBar('Step 6(1/3)'),
+      body: SingleChildScrollView(
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          const SizedBox(height: 30),
+          const Text('Unfavourable working conditions',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 42, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 5),
+          const Text('Difficulties due to holding / carrying',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(width: 8),
+              buildCircularCheckboxTransport(0,
+                  'The load has to be held between > 5 and 10 seconds or carriedover a distance between > 2 m and 5 m.'),
+              buildCircularCheckboxTransport(1,
+                  'The load has to be held > 10 seconds or carried over a\ndistance > 5 m.'),
+            ],
+          ),
+          const SizedBox(height: 5),
+          const Text('Spatial conditions',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Column(mainAxisAlignment: MainAxisAlignment.start, children: [
             const SizedBox(width: 8),
-            buildCircularCheckboxTransport(0, '每次搬運/持握持續5-10秒, 搬運距離2-5公尺'),
-            buildCircularCheckboxTransport(1, '每次搬運/持握持續>10秒, 搬運距離>5公尺'),
-          ],
-        ),
-        const SizedBox(height: 5),
-        const Text('空間條件',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-        Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-          const SizedBox(width: 8),
-          buildCircularCheckboxSpace(
-              0, '工作空間<1.5m², 地板中度骯髒、輕度不平整、輕微傾斜(不超過5°), 輕度穩定度受限, 重物須放置精確'),
-          buildCircularCheckboxSpace(1,
-              '自由度嚴重受限、考活動的高度不足、工作空間侷限, 地板非常骯髒、不平整或粗糙地面, 傾斜5-10°, 穩定度受限, 重物須放置非常精確'),
+            buildCircularCheckboxSpace(0,
+                'Work area of less than 1.5 m², floor is moderately dirty and slightly uneven, slight inclination of up to 5°, slightly restricted stability, load must be positioned precisely'),
+            buildCircularCheckboxSpace(1,
+                'Significantly restricted freedom of movement or space for movement is not high enough, working in confined spaces, floor is very dirty, uneven or roughly cobbled, steps / potholes, stronger inclination of 5-10°, restricted stability, load must be positioned very precisely'),
+          ]),
+          const SizedBox(height: 5),
         ]),
-        const SizedBox(height: 5),
-      ]),
+      ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: Padding(
@@ -130,7 +132,7 @@ class Step6of1FieldState extends State<Step6of1Field> {
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
                   minimumSize:
                       MaterialStateProperty.all<Size>(const Size(170, 50))),
-              child: const Text('上一步',
+              child: const Text('Back',
                   style: TextStyle(fontSize: 30, color: Colors.white)),
             ),
 
@@ -147,7 +149,7 @@ class Step6of1FieldState extends State<Step6of1Field> {
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
                   minimumSize:
                       MaterialStateProperty.all<Size>(const Size(170, 50))),
-              child: const Text('下一步',
+              child: const Text('Next',
                   style: TextStyle(fontSize: 30, color: Colors.white)),
             ),
           ]),

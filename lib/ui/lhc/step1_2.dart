@@ -28,16 +28,12 @@ class PoseResultField extends ConsumerWidget {
 
     return Scaffold(
       // 標題欄
-      appBar: AppBar(
-          title: const Text('步驟一(2/3)',
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
-          centerTitle: true,
-          backgroundColor: Colors.blue),
+      appBar: getTitleAppBar('Step 1(2/3)'),
 
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           const SizedBox(height: 10),
-          const Text('開始/結束',
+          const Text('Start     /       Finish',
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
 
           // width:  增加寬度以獲得更長的橫線
@@ -59,7 +55,7 @@ class PoseResultField extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(vertical: 25),
             child: Container(
               color: Colors.teal[100], // 青瑩的背景色
-              child: Text('姿勢評級: $score',
+              child: Text('Rating Points: $score',
                   // 改變字體大小
                   style: const TextStyle(color: Colors.black, fontSize: 35),
                   textAlign: TextAlign.center),
@@ -87,7 +83,8 @@ class PoseResultField extends ConsumerWidget {
                     minimumSize:
                         MaterialStateProperty.all<Size>(const Size(170, 50))),
                 // 更改文字
-                child: const Text('重新錄影', style: TextStyle(fontSize: 30))),
+                child: const Text('Restart',
+                    style: TextStyle(fontSize: 30, color: Colors.white))),
 
             // 手動評估按鈕
             ElevatedButton(
@@ -108,7 +105,8 @@ class PoseResultField extends ConsumerWidget {
                     minimumSize:
                         MaterialStateProperty.all<Size>(const Size(170, 50))),
                 // 更改文字
-                child: const Text('手動評估', style: TextStyle(fontSize: 30))),
+                child: const Text('Manual',
+                    style: TextStyle(fontSize: 30, color: Colors.white))),
           ]),
 
           const SizedBox(height: 20),
@@ -131,7 +129,8 @@ class PoseResultField extends ConsumerWidget {
                 minimumSize: MaterialStateProperty.all<Size>(
                     const Size(170, 50)), // 將按鈕大小改回 170x50
               ),
-              child: const Text('下一步', style: TextStyle(fontSize: 30))),
+              child: const Text('Next',
+                  style: TextStyle(fontSize: 30, color: Colors.white))),
           const SizedBox(height: 5),
         ]),
       ),

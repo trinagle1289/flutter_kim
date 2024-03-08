@@ -13,14 +13,15 @@ late List<CameraDescription> _cameras; // 相機列表
 late CameraController _controller; // 相機控制器
 var _videoAlbum = "KIM_Videos"; // 儲存影像的相簿
 
-void main() => runApp(Step1of1App());
+void main() => runApp(ProviderScope(child: Step1of1App()));
 
 /// 步驟 1-1 介面
 // ignore: use_key_in_widget_constructors
 class Step1of1App extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) => MaterialApp(
-        home: Scaffold(appBar: getTitleAppBar("步驟一(1/3)"), body: _BodyField()),
+        home:
+            Scaffold(appBar: getTitleAppBar("Step 1(1/3)"), body: _BodyField()),
       );
 }
 
@@ -52,7 +53,11 @@ class _BodyField extends ConsumerWidget {
             color: const Color(0xFFFFDCB2),
             height: 70,
             child: const Center(
-                child: Text('請保持在受測者的正右方拍攝', style: TextStyle(fontSize: 20))),
+                child: Text(
+              'Please shoot directly to the right of your subject.',
+              style: TextStyle(fontSize: 20),
+              textAlign: TextAlign.center,
+            )),
           ),
         ),
 
@@ -94,7 +99,8 @@ class _BodyField extends ConsumerWidget {
                 minimumSize:
                     MaterialStateProperty.all<Size>(const Size(170, 50)),
               ),
-              child: Text(recordBtnText, style: const TextStyle(fontSize: 30)),
+              child: Text(recordBtnText,
+                  style: const TextStyle(fontSize: 30, color: Colors.white)),
             ),
           ),
         ),
@@ -190,13 +196,13 @@ class _RecordBtnColor extends _$RecordBtnColor {
 @riverpod
 class _RecordBtnText extends _$RecordBtnText {
   @override
-  String build() => "開始錄影";
+  String build() => "Start";
 
   /// 是否正在錄影
-  bool isRecording() => state == "結束錄影" ? true : false;
+  bool isRecording() => state == "Finish" ? true : false;
 
   /// 切換狀態
-  void changeState() => state == "結束錄影" ? state = "開始錄影" : state = "結束錄影";
+  void changeState() => state == "Finish" ? state = "Start" : state = "Finish";
 }
 
 /// 請求權限

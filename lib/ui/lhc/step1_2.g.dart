@@ -6,7 +6,7 @@ part of 'step1_2.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$poseturePtsHash() => r'08efbb76740945b158a4d6b69571680f882b969e';
+String _$poseturePtsHash() => r'b8dc070065993aebdae41cfd95b236c6af188a50';
 
 /// 姿勢評級分數
 ///

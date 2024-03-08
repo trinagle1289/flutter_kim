@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_kim/main.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() => runApp(const Step7App());
+void main() => runApp(const ProviderScope(child: Step7App()));
 
 class Step7App extends StatelessWidget {
   const Step7App({super.key});
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-      title: '步驟七',
+      title: 'Step 7',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const Step7Field());
 }
@@ -35,12 +36,7 @@ class Step7FieldState extends State<Step7Field> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-          child: Text(' 步驟七 ',
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.normal)),
-        ),
-      ),
+      appBar: getTitleAppBar('Step 7'),
       body: Padding(
         padding: const EdgeInsets.all(5),
         child: Column(
@@ -49,8 +45,9 @@ class Step7FieldState extends State<Step7Field> {
             const Text('                ', style: TextStyle(fontSize: 20)),
             const Align(
               alignment: Alignment.center,
-              child: Text('工作協調/時間分布',
-                  style: TextStyle(fontSize: 42, fontWeight: FontWeight.bold)),
+              child: Text('Work organisation / temporal distribution',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
             ),
             const Text('                ', style: TextStyle(fontSize: 20)),
             ListTile(
@@ -58,73 +55,75 @@ class Step7FieldState extends State<Step7Field> {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                     padding: EdgeInsets.only(left: 0),
-                    child: Text('良好', style: TextStyle(fontSize: 30))),
+                    child: Text('Good', style: TextStyle(fontSize: 30))),
               ),
-              subtitle: const Text('經常由於其他活動改變體力附載情況/在一個工作日中，不存在一系列僅奏且高體力的負荷',
-                  style: TextStyle(fontSize: 20)),
-              leading: Radio<String>(
-                  value: '良好',
-                  groupValue: selectedOption,
-                  onChanged: (String? value) {
-                    setState(() {
-                      selectedOption = value;
-                      switch (value) {
-                        case '良好':
-                          step7Data = 0.0;
-                          break;
-                        case '受限':
-                          step7Data = 2.0;
-                          break;
-                        case '不良':
-                          step7Data = 4.0;
-                          break;
-                      }
-                    });
-                  }),
-            ),
-            ListTile(
-              title: const Text('受限', style: TextStyle(fontSize: 30)),
-              subtitle: const Text('鮮少由於其他活動改變體力的負荷情況/在一個工作日中，偶爾有一系列緊湊且高體力的負荷',
-                  style: TextStyle(fontSize: 20)),
-              leading: Radio<String>(
-                  value: '受限',
-                  groupValue: selectedOption,
-                  onChanged: (String? value) {
-                    setState(() {
-                      selectedOption = value;
-                      switch (value) {
-                        case '良好':
-                          step7Data = 0.0;
-                          break;
-                        case '受限':
-                          step7Data = 2.0;
-                          break;
-                        case '不良':
-                          step7Data = 4.0;
-                          break;
-                      }
-                    });
-                  }),
-            ),
-            ListTile(
-              title: const Text('不良', style: TextStyle(fontSize: 30)),
               subtitle: const Text(
-                  '沒有/幾乎沒有由於其他活動改變體力的負荷情況/在一個工作日中，頻繁出現一系列緊湊且高體力的負荷',
+                  'Frequent variation of the physical workload situation due to other activities',
                   style: TextStyle(fontSize: 20)),
               leading: Radio<String>(
-                  value: '不良',
+                  value: 'Good',
                   groupValue: selectedOption,
                   onChanged: (String? value) {
                     setState(() {
                       selectedOption = value;
                       switch (value) {
-                        case '良好':
+                        case 'Good':
                           step7Data = 0.0;
                           break;
-                        case '受限':
+                        case 'Restricted':
                           step7Data = 2.0;
                           break;
-                        case '不良':
+                        case 'Unfavourable':
+                          step7Data = 4.0;
+                          break;
+                      }
+                    });
+                  }),
+            ),
+            ListTile(
+              title: const Text('Restricted', style: TextStyle(fontSize: 30)),
+              subtitle: const Text(
+                  'Rare variation of the physical workload situation due to other activities',
+                  style: TextStyle(fontSize: 20)),
+              leading: Radio<String>(
+                  value: 'Restricted',
+                  groupValue: selectedOption,
+                  onChanged: (String? value) {
+                    setState(() {
+                      selectedOption = value;
+                      switch (value) {
+                        case 'Good':
+                          step7Data = 0.0;
+                          break;
+                        case 'Restricted':
+                          step7Data = 2.0;
+                          break;
+                        case 'Unfavourable':
+                          step7Data = 4.0;
+                          break;
+                      }
+                    });
+                  }),
+            ),
+            ListTile(
+              title: const Text('Unfavourable', style: TextStyle(fontSize: 30)),
+              subtitle: const Text(
+                  'No/hardly any variation of the physical workload ituation due to other activities',
+                  style: TextStyle(fontSize: 20)),
+              leading: Radio<String>(
+                  value: 'Unfavourable',
+                  groupValue: selectedOption,
+                  onChanged: (String? value) {
+                    setState(() {
+                      selectedOption = value;
+                      switch (value) {
+                        case 'Good':
+                          step7Data = 0.0;
+                          break;
+                        case 'Restricted':
+                          step7Data = 2.0;
+                          break;
+                        case 'Unfavourable':
                           step7Data = 4.0;
                           break;
                       }
@@ -148,7 +147,8 @@ class Step7FieldState extends State<Step7Field> {
                               MaterialStateProperty.all<Color>(Colors.blue),
                           minimumSize: MaterialStateProperty.all<Size>(
                               const Size(double.infinity, 50))),
-                      child: const Text('上一步', style: TextStyle(fontSize: 30))),
+                      child: const Text('Back',
+                          style: TextStyle(fontSize: 30, color: Colors.white))),
                 ),
               ),
               const SizedBox(width: 3),
@@ -167,7 +167,8 @@ class Step7FieldState extends State<Step7Field> {
                               MaterialStateProperty.all<Color>(Colors.blue),
                           minimumSize: MaterialStateProperty.all<Size>(
                               const Size(double.infinity, 50))),
-                      child: const Text('下一步', style: TextStyle(fontSize: 30))),
+                      child: const Text('Next',
+                          style: TextStyle(fontSize: 30, color: Colors.white))),
                 ),
               ),
             ]),

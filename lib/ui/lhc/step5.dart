@@ -53,22 +53,15 @@ class Step5FieldState extends State<Step5Field> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        title: const Text(
-          '步驟五',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 40),
-        ),
-      ),
+      appBar: getTitleAppBar('Step 5'),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(height: 30),
           // 副標題
           const Text(
-            '力量傳遞/負重條件',
+            'Load handling conditions',
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 42,
               fontWeight: FontWeight.bold,
@@ -77,13 +70,18 @@ class Step5FieldState extends State<Step5Field> {
           const SizedBox(height: 30),
           // 內容
           Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                buildCircularCheckbox(0, '良好', '(可使用雙手對稱施力)'),
-                buildCircularCheckbox(1, '受限', '(暫時性的單手或不對稱施力)'),
-                buildCircularCheckbox(2, '不良', '(幾乎以單手施力或不穩定的施力重心)'),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  buildCircularCheckbox(0, 'Good',
+                      '(Load is handled with both hands and symmetrically)'),
+                  buildCircularCheckbox(1, 'Restricted',
+                      '(Load is handled temporarily with one hand and/or asymmetrically, uneven load distribution between the two hands)'),
+                  buildCircularCheckbox(2, 'Unfavourable',
+                      '(Load is handled predominantly with one hand or unstable load centre)'),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 30),
@@ -100,7 +98,7 @@ class Step5FieldState extends State<Step5Field> {
                     backgroundColor: MaterialStateProperty.all(Colors.blue),
                     minimumSize:
                         MaterialStateProperty.all<Size>(const Size(170, 50))),
-                child: const Text('上一步',
+                child: const Text('Back',
                     style: TextStyle(fontSize: 30, color: Colors.white)),
               ),
               const SizedBox(width: 13),
@@ -120,7 +118,7 @@ class Step5FieldState extends State<Step5Field> {
                     backgroundColor: MaterialStateProperty.all(Colors.blue),
                     minimumSize:
                         MaterialStateProperty.all<Size>(const Size(170, 50))),
-                child: const Text('下一步',
+                child: const Text('Next',
                     style: TextStyle(fontSize: 30, color: Colors.white)),
               ),
             ],

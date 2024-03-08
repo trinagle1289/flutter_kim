@@ -5,9 +5,11 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'step8.g.dart';
 
-void main() => runApp(ProviderScope(child: Step8App()));
+void main() => runApp(const ProviderScope(child: Step8App()));
 
 class Step8App extends ConsumerWidget {
+  const Step8App({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // 風險等級
@@ -36,9 +38,7 @@ class Step8App extends ConsumerWidget {
     return MaterialApp(
       title: 'FinalPage',
       home: Scaffold(
-        appBar: AppBar(
-            title: const Center(
-                child: Text('結果報告', style: TextStyle(fontSize: 40)))),
+        appBar: getTitleAppBar('Results Report'),
         body: ListView(
           children: <Widget>[
             Align(
@@ -58,7 +58,7 @@ class Step8App extends ConsumerWidget {
                               borderRadius: BorderRadius.circular(40)),
                           child: Center(
                             child: Text(
-                              '風險等級: $riskLevelText',
+                              'Risk Value: $riskLevelText',
                               style: const TextStyle(
                                   fontSize: 38, color: Colors.black),
                             ),
@@ -71,7 +71,7 @@ class Step8App extends ConsumerWidget {
                       child: Center(
                         child: Container(
                           width: 350,
-                          height: 350,
+                          height: 300,
                           decoration: BoxDecoration(
                               color: const Color.fromRGBO(235, 235, 235, 1.0),
                               borderRadius: BorderRadius.circular(40)),
@@ -81,7 +81,7 @@ class Step8App extends ConsumerWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   const Text(
-                                    '風險等級計算結果:',
+                                    'Rating Points',
                                     style: TextStyle(
                                         fontSize: 25, color: Colors.black),
                                   ),
@@ -89,7 +89,7 @@ class Step8App extends ConsumerWidget {
                                     // 時間評級
                                     text: TextSpan(children: [
                                       const TextSpan(
-                                        text: '時間評級:',
+                                        text: 'Time rating points: ',
                                         style: TextStyle(
                                             fontSize: 20, color: Colors.black),
                                       ),
@@ -104,7 +104,8 @@ class Step8App extends ConsumerWidget {
                                   RichText(
                                     text: TextSpan(children: [
                                       TextSpan(
-                                        text: '負重($bearWeightGenderText):',
+                                        text:
+                                            'Effective load weight ($bearWeightGenderText): ',
                                         style: const TextStyle(
                                             fontSize: 20, color: Colors.black),
                                       ),
@@ -119,7 +120,7 @@ class Step8App extends ConsumerWidget {
                                   RichText(
                                     text: TextSpan(children: [
                                       const TextSpan(
-                                          text: '力量傳遞:',
+                                          text: 'Load handling conditions: ',
                                           style: TextStyle(
                                               fontSize: 20,
                                               color: Colors.black)),
@@ -134,7 +135,7 @@ class Step8App extends ConsumerWidget {
                                   RichText(
                                     text: TextSpan(children: [
                                       const TextSpan(
-                                          text: '身體姿勢:',
+                                          text: 'Total body posture: ',
                                           style: TextStyle(
                                               fontSize: 20,
                                               color: Colors.black)),
@@ -148,7 +149,8 @@ class Step8App extends ConsumerWidget {
                                   RichText(
                                     text: TextSpan(children: [
                                       const TextSpan(
-                                          text: '工作條件:',
+                                          text:
+                                              'Unfavourable working conditions: ',
                                           style: TextStyle(
                                               fontSize: 20,
                                               color: Colors.black)),
@@ -160,12 +162,14 @@ class Step8App extends ConsumerWidget {
                                   ),
                                   // 工作協調
                                   RichText(
+                                    textAlign: TextAlign.center,
                                     text: TextSpan(children: [
                                       const TextSpan(
-                                          text: '工作協調:',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black)),
+                                        text:
+                                            'Work organisation / temporal distribution: ',
+                                        style: TextStyle(
+                                            fontSize: 20, color: Colors.black),
+                                      ),
                                       TextSpan(
                                           text: workCoordinationScoreText,
                                           style: const TextStyle(
@@ -173,27 +177,32 @@ class Step8App extends ConsumerWidget {
                                     ]),
                                   ),
                                   const Text('      ',
-                                      style: TextStyle(fontSize: 30)),
+                                      style: TextStyle(fontSize: 15)),
                                   RichText(
-                                    text: TextSpan(children: [
-                                      const TextSpan(
-                                          text: '風險值=',
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(
+                                      children: [
+                                        const TextSpan(
+                                          text: 'Risk Value\n',
                                           style: TextStyle(
                                               fontSize: 20,
-                                              color: Colors.black)),
-                                      TextSpan(
-                                        text: riskLevelText,
-                                        style: const TextStyle(
-                                            fontSize: 20, color: Colors.red),
-                                      ),
-                                    ]),
+                                              color: Colors.black),
+                                        ),
+                                        TextSpan(
+                                          text:
+                                              "$timeScoreText+$bearWeightScoreText+$powerTransferScoreText+$bodyPostureScoreText+$workingConditionsScoreText+$workCoordinationScoreText=$riskLevelText",
+                                          style: const TextStyle(
+                                              fontSize: 20, color: Colors.red),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ]),
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
                     // 生理過載可能性+健康疑慮
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -214,14 +223,17 @@ class Step8App extends ConsumerWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       const Text(
-                                        '\n生理過載可能性',
+                                        '\nProbability of physical overload',
                                         style: TextStyle(
-                                            fontSize: 22, color: Colors.black),
+                                            fontSize: 18,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.center,
                                       ),
                                       const Text(
                                         '  ',
                                         style: TextStyle(
-                                            fontSize: 10, color: Colors.white),
+                                            fontSize: 3, color: Colors.white),
                                       ),
                                       Text(physiologicalText,
                                           style: const TextStyle(
@@ -249,19 +261,20 @@ class Step8App extends ConsumerWidget {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    const Text(
-                                      '\n健康疑慮',
-                                      style: TextStyle(
-                                          fontSize: 22, color: Colors.black),
-                                    ),
+                                    const Text('\nPossible health consequences',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold)),
                                     const Text(
                                       '  ',
                                       style: TextStyle(
-                                          fontSize: 10, color: Colors.white),
+                                          fontSize: 3, color: Colors.white),
                                     ),
                                     Text(healthConcernText,
                                         style: const TextStyle(
-                                            fontSize: 18, color: Colors.black),
+                                            fontSize: 15, color: Colors.black),
                                         textAlign: TextAlign.center),
                                   ],
                                 ),
@@ -289,12 +302,14 @@ class Step8App extends ConsumerWidget {
                   child: Center(
                     child: Column(children: [
                       const Text(' ', style: TextStyle(fontSize: 10)),
-                      const Text('採取措施:', style: TextStyle(fontSize: 25)),
+                      const Text('Suggestions:',
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold)),
                       const Text(' ', style: TextStyle(fontSize: 10)),
                       Text(' $preventiveMeasuresText',
                           style: const TextStyle(
                               fontSize: 20, color: Colors.black),
-                          textAlign: TextAlign.start),
+                          textAlign: TextAlign.center),
                     ]),
                   ),
                 ),
@@ -304,7 +319,7 @@ class Step8App extends ConsumerWidget {
               height: 100,
               child: Center(
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
+                  padding: const EdgeInsets.only(bottom: 30),
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: Row(
@@ -323,7 +338,7 @@ class Step8App extends ConsumerWidget {
                                     MaterialStateProperty.all(Colors.blue),
                                 minimumSize: MaterialStateProperty.all<Size>(
                                     const Size(170, 50))),
-                            child: const Text('儲存資料',
+                            child: const Text('Save',
                                 style: TextStyle(
                                     fontSize: 30, color: Colors.white)),
                           ),
@@ -350,7 +365,7 @@ class Step8App extends ConsumerWidget {
                                     MaterialStateProperty.all(Colors.blue),
                                 minimumSize: MaterialStateProperty.all<Size>(
                                     const Size(170, 50))),
-                            child: const Text('結束報告',
+                            child: const Text('Finish',
                                 style: TextStyle(
                                     fontSize: 30, color: Colors.white)),
                           ),
@@ -433,13 +448,14 @@ String _physiologicalText(_PhysiologicalTextRef ref) {
   // 風險值
   var level = getRiskLevel();
   if (level < 20) {
-    result = "生理過載可能性低";
+    result = "Physical overload is unlikely.";
   } else if (level < 50) {
-    result = "對恢復能力較弱者有生理過載可能性";
+    result = "Physical overload is possible for less resilient persons.";
   } else if (level < 100) {
-    result = "對一般族群有生理過載可能性";
+    result =
+        "Physical overload is also possible for normally resilient persons.";
   } else {
-    result = "生理過載極可能發生";
+    result = "Physical overload is likely.";
   }
 
   return result;
@@ -453,13 +469,16 @@ String _healthConcernText(_HealthConcernTextRef ref) {
   // 風險值
   var level = getRiskLevel();
   if (level < 20) {
-    result = "無預期健康疑慮";
+    result = "No health risk is to be expected.";
   } else if (level < 50) {
-    result = "疲勞、低度適應不良問題，可由休息時間做調適";
+    result =
+        "Fatigue, low-grade adaptation problems which can be compensated for during leisure time.";
   } else if (level < 100) {
-    result = "對一般族群有生理過載可能性";
+    result =
+        "Disorders (pain), possibly including dysfunctions, reversible in most cases, without morphological manifestation.";
   } else {
-    result = "生理過載極可能發生";
+    result =
+        "More pronounced disorders and/or dysfunctions, structural damage with pathological significance.";
   }
 
   return result;
@@ -473,13 +492,16 @@ String _preventiveMeasuresText(_PreventiveMeasuresTextRef ref) {
   // 風險值
   var level = getRiskLevel();
   if (level < 20) {
-    result = "無";
+    result = "None";
   } else if (level < 50) {
-    result = "針對恢復能力較弱者進行工作再設計，以及其他預防措施";
+    result =
+        "For less resilient persons, workplace redesign and other prevention measures may be helpful.";
   } else if (level < 100) {
-    result = "出現異常(如疼痛)，可能有功能障礙，大部分個案為可逆的，沒有型態學上的表現";
+    result =
+        "Workplace redesign and other prevention measures should be considered.";
   } else {
-    result = "需要進行工作再設計，以及其他預防措施";
+    result =
+        "Workplace redesign measures are necessary. Other prevention measures should be considered.";
   }
 
   return result;

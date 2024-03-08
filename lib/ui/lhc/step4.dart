@@ -14,12 +14,7 @@ class Step4App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(
-              backgroundColor: Colors.blue,
-              flexibleSpace: Container(color: Colors.blue),
-              centerTitle: true,
-              automaticallyImplyLeading: false,
-              title: const Text('步驟四', style: TextStyle(fontSize: 40))),
+          appBar: getTitleAppBar('Step 4'),
           body: const Center(child: RadioExample())),
     );
   }
@@ -69,14 +64,17 @@ class _RadioExampleState extends State<RadioExample> {
     return Column(children: [
       const Text('               ', style: TextStyle(fontSize: 20)),
       const Center(
-        child: Text('負重評級',
-            style: TextStyle(fontSize: 42, fontWeight: FontWeight.bold)),
+        child: Text(
+          'Effective load weight',
+          style: TextStyle(fontSize: 42, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+        ),
       ),
       const Text('               ', style: TextStyle(fontSize: 20)),
       Row(children: [
         Expanded(
           child: RadioListTile<Gender>(
-              title: const Text('男性', style: TextStyle(fontSize: 30)),
+              title: const Text('Male', style: TextStyle(fontSize: 25)),
               value: Gender.man,
               groupValue: selectedGender,
               onChanged: (value) {
@@ -88,7 +86,7 @@ class _RadioExampleState extends State<RadioExample> {
         ),
         Expanded(
           child: RadioListTile<Gender>(
-              title: const Text('女性', style: TextStyle(fontSize: 30)),
+              title: const Text('Female', style: TextStyle(fontSize: 25)),
               value: Gender.woman,
               groupValue: selectedGender,
               onChanged: (value) {
@@ -100,7 +98,7 @@ class _RadioExampleState extends State<RadioExample> {
         ),
       ]),
       const Text('               ', style: TextStyle(fontSize: 20)),
-      const Text('負重量(kg)', style: TextStyle(fontSize: 30)),
+      const Text('Effective load weight(kg)', style: TextStyle(fontSize: 30)),
       const Text('               ', style: TextStyle(fontSize: 20)),
       Container(
         decoration:
@@ -108,7 +106,8 @@ class _RadioExampleState extends State<RadioExample> {
         child: IgnorePointer(
           ignoring: selectedGender == null,
           child: DropdownButton<String>(
-              hint: const Text('大約為', textAlign: TextAlign.center),
+              hint: const Text('approx.',
+                  style: TextStyle(fontSize: 25), textAlign: TextAlign.center),
               value: selectedOption,
               items: dropdownOptions.map((option) {
                 return DropdownMenuItem<String>(
@@ -179,7 +178,8 @@ class _RadioExampleState extends State<RadioExample> {
                   backgroundColor:
                       MaterialStateProperty.all<Color>(Colors.blue),
                   minimumSize: MaterialStateProperty.all<Size>(Size(170, 50))),
-              child: const Text('上一步', style: TextStyle(fontSize: 30))),
+              child: const Text('Back',
+                  style: TextStyle(fontSize: 30, color: Colors.white))),
         ),
 
         const SizedBox(width: 13),
@@ -200,7 +200,8 @@ class _RadioExampleState extends State<RadioExample> {
                   backgroundColor:
                       MaterialStateProperty.all<Color>(Colors.blue),
                   minimumSize: MaterialStateProperty.all<Size>(Size(170, 50))),
-              child: const Text('下一步', style: TextStyle(fontSize: 30))),
+              child: const Text('Next',
+                  style: TextStyle(fontSize: 30, color: Colors.white))),
         ),
       ]),
     ]);

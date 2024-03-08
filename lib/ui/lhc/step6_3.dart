@@ -79,36 +79,36 @@ class Step6of3FieldState extends State<Step6of3Field> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        title: const Text('步驟六(3/3)',
-            textAlign: TextAlign.center, style: TextStyle(fontSize: 40)),
+      appBar: getTitleAppBar('Step 6(3/3)'),
+      body: SingleChildScrollView(
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          const SizedBox(height: 30),
+          const Text('Unfavourable working conditions',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 42, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 5),
+          const Text(
+            'Force transfer/application',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+            const SizedBox(width: 8),
+            buildCircularCheckboxTransport(0,
+                'Loads difficult to grip / greater holding forces required / no shaped grips / work gloves'),
+            buildCircularCheckboxTransport(1,
+                'Loads hardly possible to grip / slippery, soft, sharp edges / no/unsuitable grips / work gloves'),
+          ]),
+          const SizedBox(height: 5),
+          const Text('Clothes',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+            const SizedBox(width: 8),
+            buildCircularCheckboxSpace(0,
+                'Additional physical workload due to impairing clothes or equipment (e.g. when wearing heavy rain jackets, whole-body protection suits, respiratory protective equipment, tool belts or the like)')
+          ]),
+          const SizedBox(height: 5),
+        ]),
       ),
-      body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        const SizedBox(height: 30),
-        const Text('不良工作條件',
-            style: TextStyle(fontSize: 42, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 5),
-        const Text(
-          '力量傳遞/應用受限',
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-        ),
-        Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-          const SizedBox(width: 8),
-          buildCircularCheckboxTransport(0, '重物不易抓握/需更大的持握力量/沒有造型的握柄/工作手套'),
-          buildCircularCheckboxTransport(1, '重物幾乎難以抓握/滑、軟、尖銳的邊緣/無或不適當的握柄/工作手套'),
-        ]),
-        const SizedBox(height: 5),
-        const Text('衣服條件',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-        Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-          const SizedBox(width: 8),
-          buildCircularCheckboxSpace(
-              0, '由於防護衣物或裝備增加額外身體負荷，例如厚重雨衣、全身防護裝、呼吸防護器、裝備腰帶等')
-        ]),
-        const SizedBox(height: 5),
-      ]),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: Padding(
@@ -126,7 +126,7 @@ class Step6of3FieldState extends State<Step6of3Field> {
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
                   minimumSize:
                       MaterialStateProperty.all<Size>(const Size(170, 50))),
-              child: const Text('上一步',
+              child: const Text('Back',
                   style: TextStyle(fontSize: 30, color: Colors.white)),
             ),
             ElevatedButton(
@@ -142,7 +142,7 @@ class Step6of3FieldState extends State<Step6of3Field> {
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
                   minimumSize:
                       MaterialStateProperty.all<Size>(const Size(170, 50))),
-              child: const Text('下一步',
+              child: const Text('Next',
                   style: TextStyle(fontSize: 30, color: Colors.white)),
             ),
           ]),

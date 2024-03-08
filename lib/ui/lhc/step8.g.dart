@@ -6,7 +6,7 @@ part of 'step8.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$riskLevelTextHash() => r'bd798062e8c9efd96e53d085a33ce472d1ceb30f';
+String _$riskLevelTextHash() => r'332a39ea935629b5c09adae33cf783b784982abc';
 
 /// 風險值文字
 ///
@@ -23,7 +23,7 @@ final _riskLevelTextProvider = AutoDisposeProvider<String>.internal(
 );
 
 typedef _RiskLevelTextRef = AutoDisposeProviderRef<String>;
-String _$riskLevelColorHash() => r'eefd94eefc49a20a0a9f8e342fb9bb59a3b839d9';
+String _$riskLevelColorHash() => r'6627d533fbf653501db56df6ae30a5f7068d377f';
 
 /// 風險值顏色
 ///
@@ -112,7 +112,7 @@ final _powerTransferScoreTextProvider = AutoDisposeProvider<String>.internal(
 
 typedef _PowerTransferScoreTextRef = AutoDisposeProviderRef<String>;
 String _$bodyPostureScoreTextHash() =>
-    r'b03a683401e4eb5b0d994fae2628613a01fc96ab';
+    r'059f473764d4ec79bc68f96245b72a9509a8fb74';
 
 /// 身體姿勢文字
 ///
@@ -130,7 +130,7 @@ final _bodyPostureScoreTextProvider = AutoDisposeProvider<String>.internal(
 
 typedef _BodyPostureScoreTextRef = AutoDisposeProviderRef<String>;
 String _$workingConditionsScoreTextHash() =>
-    r'73fa451ace1e1639a249466a1fb3db50e9a7e59c';
+    r'58ac8a47e24c23714e5233347a5057d310035bab';
 
 /// 工作條件文字
 ///
@@ -166,7 +166,7 @@ final _workCoordinationScoreTextProvider = AutoDisposeProvider<String>.internal(
 );
 
 typedef _WorkCoordinationScoreTextRef = AutoDisposeProviderRef<String>;
-String _$physiologicalTextHash() => r'036982f1c22f2b148ca3361c8053858ac823d2a5';
+String _$physiologicalTextHash() => r'ecf86e9f3a982eee49f5dabb110b6e432d44c160';
 
 /// 生理過載可能性文字
 ///
@@ -183,7 +183,7 @@ final _physiologicalTextProvider = AutoDisposeProvider<String>.internal(
 );
 
 typedef _PhysiologicalTextRef = AutoDisposeProviderRef<String>;
-String _$healthConcernTextHash() => r'03121f95df22ccb0da653f433c5e3f60afac241b';
+String _$healthConcernTextHash() => r'220e5713e89538886f501c69f5357d2af328722e';
 
 /// 健康疑慮文字
 ///
@@ -201,7 +201,7 @@ final _healthConcernTextProvider = AutoDisposeProvider<String>.internal(
 
 typedef _HealthConcernTextRef = AutoDisposeProviderRef<String>;
 String _$preventiveMeasuresTextHash() =>
-    r'67b48566a4c332fea8f0f6355dd246471a8d027a';
+    r'236b3b0e2a944f7537e0b6c93d94012e5bb5abc2';
 
 /// 採取措施文字
 ///

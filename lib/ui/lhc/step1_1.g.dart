@@ -24,7 +24,7 @@ final _recordBtnColorProvider =
 );
 
 typedef _$RecordBtnColor = AutoDisposeNotifier<Color>;
-String _$recordBtnTextHash() => r'96ad9a8c69b635ecddb9ced9b3417cd3d98b3647';
+String _$recordBtnTextHash() => r'b369f3912b1c9ee8b5593e25734f7025aee85fce';
 
 /// 錄影按鈕文字
 ///

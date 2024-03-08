@@ -23,25 +23,39 @@ void main() => runApp(const TitleApp());
 var step1of1Data = List<String>.filled(2, "");
 
 /// 姿態評級
-double step1of2Data = 0.0;
+// double step1of2Data = 0.0;
+// double step1of2Data = 7.0; // 1
+// double step1of2Data = 10.0; // 2
+double step1of2Data = 18.0; // 3
 
 /// 身體姿勢 額外加分的部分(總共 4 類，最多計算 6 分)
 var step2Data = List<double>.filled(4, 0.0);
 
 /// 時間評級
-double step3Data = 0.0;
+// double step3Data = 0.0;
+// double step3Data = 2.0; // 1
+// double step3Data = 2.5; // 2
+double step3Data = 3.0; // 3
 
 /// 負重評級
-double step4Data = 0.0;
+// double step4Data = 0.0;
+// double step4Data = 9.0; // 1
+// double step4Data = 8.0; // 2
+double step4Data = 11.0; // 3
 
 /// 負重評級性別
-String step4GenderData = "男";
+// String step4GenderData = "男";
+// String step4GenderData = "Female"; // 1
+String step4GenderData = "Male"; // 2 3
 
 /// 力量傳遞/負重條件
 double step5Data = 0.0;
+// double step5Data = 2.0; // 2
 
 /// 不良工作條件[搬運/握持受限, 空間條件]
-var step6fo1Data = List<double>.filled(2, 0.0);
+// var step6fo1Data = List<double>.filled(2, 0.0);
+// var step6fo1Data = [2, 0.0]; // 1
+var step6fo1Data = [3, 0.0]; // 3
 
 /// 不良工作條件[手/手臂的位置與動作, 氣候條件]
 var step6fo2Data = List<double>.filled(2, 0.0);
@@ -50,7 +64,9 @@ var step6fo2Data = List<double>.filled(2, 0.0);
 var step6fo3Data = List<double>.filled(2, 0.0);
 
 /// 工作協調/時間分佈
-double step7Data = 0.0;
+// double step7Data = 0.0;
+// double step7Data = 4.0; // 2
+double step7Data = 2.0; // 3
 
 /// 取得 LHC 介面
 Widget getLhcApp(String idx) {
@@ -94,7 +110,7 @@ Widget getLhcApp(String idx) {
       widget = const Step7App();
       break;
     case "8":
-      widget = ProviderScope(child: Step8App());
+      widget = const ProviderScope(child: Step8App());
       break;
     default:
       widget = const TitleApp();
@@ -110,7 +126,8 @@ AppBar getTitleAppBar(String title) => AppBar(
     automaticallyImplyLeading: false,
     backgroundColor: Colors.blue,
     flexibleSpace: Container(color: Colors.blue),
-    title: Text(title, style: const TextStyle(fontSize: 40)));
+    title:
+        Text(title, style: const TextStyle(fontSize: 40, color: Colors.white)));
 
 /// 取得身體姿勢評級
 double getPoseData() {
