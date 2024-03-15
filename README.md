@@ -1,5 +1,11 @@
 # flutter_kim_lhc
 
+此專案目前停止更新，將移動至[新的專案位置](https://github.com/trinagle1289/kim-flutter-nodejs/tree/develop/flutter/projects/flutter_kim)進行查看
+
+此專案目前僅用於資料上的備份
+
+---
+
 此 Flutter 專案用於人因危害風險的評估，主要檢測 KIM-LHC(人工物料搬運) 的風險值評估，目前注重於 Android 的開發
 <br>
 
